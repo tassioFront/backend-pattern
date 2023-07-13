@@ -20,4 +20,4 @@ app.use((req, res, next) => {
 // });
 // server.on('error', console.error);
 
-module.exports = app;
+export default app;
