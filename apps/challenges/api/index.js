@@ -9,7 +9,15 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/teste', (req, res) => {
+app.get('/api/teste', (req, res) => {
+  return res.send({ message: 'Welcome!""' });
+});
+
+app.get('/api', (req, res) => {
+  return res.send({ message: 'Welcome!""' });
+});
+
+app.get('/', (req, res) => {
   return res.send({ message: 'Welcome!""' });
 });
 // const port = process.env.port || 3333;
