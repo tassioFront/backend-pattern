@@ -1,0 +1,3 @@
+{
+  "rewrites": [{ "source": "/challenges/(.*)", "destination": "/dist/apps/challenges/main.js" }]
+}
