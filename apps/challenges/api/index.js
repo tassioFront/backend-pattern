@@ -1,30 +1,16 @@
-import * as express from 'express';
-
-const app = express();
-
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  next();
-});
-
-app.get('/api/teste', (req, res) => {
-  return res.send({ message: 'Welcome!""' });
-});
+const app = require('express')();
+const { v4 } = require('uuid');
 
 app.get('/api', (req, res) => {
-  return res.send({ message: 'Welcome!""' });
+  const path = `/api/item/${v4()}`;
+  res.setHeader('Content-Type', 'text/html');
+  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
+  res.end(`Hello! Go to item: <a href="${path}">${path}</a>`);
 });
 
-app.get('/', (req, res) => {
-  return res.send({ message: 'Welcome!""' });
+app.get('/api/item/:slug', (req, res) => {
+  const { slug } = req.params;
+  res.end(`Item: ${slug}`);
 });
-// const port = process.env.port || 3333;
-// const server = app.listen(port, () => {
-//   process.env.NODE_ENV !== 'production' &&
-//     console.log(`Listening at http://localhost:${port}`);
-// });
-// server.on('error', console.error);
 
-export default app;
+module.exports = app;
