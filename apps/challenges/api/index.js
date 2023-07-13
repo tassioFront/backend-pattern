@@ -2,10 +2,6 @@ import * as express from 'express';
 
 const app = express();
 
-import challengeRouter from '../src/challenges.router';
-
-app.use(challengeRouter);
-
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
@@ -13,6 +9,9 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get('/teste', (req, res) => {
+  return res.send({ message: 'Welcome!""' });
+});
 // const port = process.env.port || 3333;
 // const server = app.listen(port, () => {
 //   process.env.NODE_ENV !== 'production' &&
