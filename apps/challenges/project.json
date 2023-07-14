@@ -8,7 +8,7 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputFileName": "index.js",
-        "outputPath": "dist/apps/api",
+        "outputPath": "dist/apps/challenges",
         "main": "apps/challenges/src/index.ts",
         "tsConfig": "apps/challenges/tsconfig.app.json"
       },
