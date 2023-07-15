@@ -17,7 +17,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Cloud SDK
+      - name: Set up Clou SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
           version: 'latest'
