@@ -19,7 +19,7 @@ jobs:
       - uses: 'google-github-actions/auth@v1'
         with:
           workload_identity_provider: ${{ vars.PROVIDER }}
-          service_account: 'https://challenges-ws2m6t2msa-uc.a.run.app'
+          service_account: ${{ vars.ACCOUNT }}
 
       - id: 'deploy'
         uses: 'google-github-actions/deploy-cloudrun@v1'
