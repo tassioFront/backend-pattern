@@ -3,7 +3,7 @@ name: Cloud Run Deploy
 on:
   push:
     branches:
-      - main
+      - master # not using
 
 jobs:
   deploy:
