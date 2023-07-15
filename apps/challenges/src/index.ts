@@ -1,5 +1,4 @@
 import * as express from 'express';
-import * as bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 
 const app = express();

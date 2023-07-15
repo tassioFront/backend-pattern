@@ -1,0 +1,27 @@
+{
+  "name": "models-user",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/models/user/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/models/user",
+        "tsConfig": "libs/models/user/tsconfig.lib.json",
+        "packageJson": "libs/models/user/package.json",
+        "main": "libs/models/user/src/index.ts",
+        "assets": ["libs/models/user/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/models/user/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}

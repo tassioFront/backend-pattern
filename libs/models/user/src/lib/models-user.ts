@@ -1,13 +1,18 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const challengeSchema = new Schema(
+export interface User {
+  email: string;
+  password: string;
+}
+
+const userSchema = new Schema<User>(
   {
-    title: {
+    email: {
       type: String,
       required: true,
     },
-    content: {
+    password: {
       type: String,
       required: true,
     },
@@ -15,4 +20,4 @@ const challengeSchema = new Schema(
   { timestamps: true }
 );
 
-export default mongoose.model('Challenge', challengeSchema);
+export default mongoose.model('User', userSchema);
