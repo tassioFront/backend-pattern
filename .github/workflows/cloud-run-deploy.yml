@@ -22,6 +22,7 @@ jobs:
         with:
           version: 'latest'
           service_account_key: ${{ secrets.GCP_SA_KEY }}
+          project_id: ${{ vars.PROJECT_ID }}
 
       - name: Authenticate with Google Cloud
         run: |
