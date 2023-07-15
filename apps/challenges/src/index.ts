@@ -1,9 +1,11 @@
 import * as express from 'express';
 import mongoose from 'mongoose';
 
-const app = express();
+import { isAuthEnum } from '@backend-pattern/middleware/is-auth';
 
 import challengeRouter from './challenges.router';
+
+const app = express();
 
 app.use(express.json());
 
@@ -13,7 +15,10 @@ app.use((_, res, next) => {
     'Access-Control-Allow-Methods',
     'OPTIONS, GET, POST, PUT, PATCH, DELETE'
   );
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Content-Type, ' + isAuthEnum.authHeader
+  );
   next();
 });
 
@@ -27,7 +32,7 @@ app.use(
     _: express.NextFunction
   ) => {
     process.env.NODE_ENV !== 'production' &&
-      console.log('Looks something went wrong, brother', error);
+      console.log('Looks something went wrong, brother', error, error.message);
     const status = error.statusCode || 500;
     const message = error.message;
     const data = error.data;
@@ -49,5 +54,5 @@ mongoose
   .catch(
     (error) =>
       process.env.NODE_ENV !== 'production' &&
-      console.log('Looks something went wrong, brother', error)
+      console.log('Looks something went wrong with the mongo, brother', error)
   );

@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@backend-pattern/middleware/is-auth": [
+        "libs/middleware/is-auth/src/index.ts"
+      ],
       "@backend-pattern/models/challenges": [
         "libs/models/challenges/src/index.ts"
       ],

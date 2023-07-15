@@ -1,9 +1,11 @@
 import * as express from 'express';
 import mongoose from 'mongoose';
 
-const app = express();
+import { isAuthEnum } from '@backend-pattern/middleware/is-auth';
 
 import usersRouter from './users.router';
+
+const app = express();
 
 app.use(express.json());
 
@@ -13,7 +15,10 @@ app.use((_, res, next) => {
     'Access-Control-Allow-Methods',
     'OPTIONS, GET, POST, PUT, PATCH, DELETE'
   );
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Content-Type, ' + isAuthEnum.authHeader
+  );
   next();
 });
 
