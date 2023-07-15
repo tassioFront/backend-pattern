@@ -18,13 +18,12 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up Cloud SDK
-        run: |
-          echo ${{ secrets.GCP_SA_KEY }} | base64 --decode > ${HOME}/gcp-sa-key.json
-          gcloud auth activate-service-account --key-file=${HOME}/gcp-sa-key.json
-          gcloud auth configure-docker
-          gcloud config set project ${{ vars.PROJECT_ID }}
-          export GOOGLE_APPLICATION_CREDENTIALS=${HOME}/gcp-sa-key.json
-          export GOOGLE_CLOUD_PROJECT=${{ vars.PROJECT_ID }}
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          version: 'latest'
+
+      - name: Authenticate with Google Cloud
+        run: gcloud auth configure-docker
 
       - name: Build and deploy to Cloud Run
         run: |
