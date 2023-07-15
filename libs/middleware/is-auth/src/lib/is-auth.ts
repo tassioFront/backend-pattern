@@ -1,14 +1,14 @@
 import * as jwt from 'jsonwebtoken';
-import { Express, NextFunction } from 'express-serve-static-core';
+import { CustomExpress } from '@backend-pattern/@types';
 
 enum isAuthEnum {
   authHeader = 'Authorization',
 }
 
 const isAuth = (
-  req: Express['request'],
-  _: Express['response'],
-  next: NextFunction
+  req: CustomExpress['request'],
+  _: CustomExpress['response'],
+  next: CustomExpress['next']
 ) => {
   const authHeader = req.get(isAuthEnum.authHeader);
   if (!authHeader) {
@@ -27,7 +27,6 @@ const isAuth = (
     const error = new Error('Not authenticated.');
     throw { message: error.message, statusCode: 401 };
   }
-  // @ts-expect-error: types not working
   req.userId = decodedToken.userId;
   next();
 };

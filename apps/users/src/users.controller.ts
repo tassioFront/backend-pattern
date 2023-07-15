@@ -1,28 +1,18 @@
-import { Express, NextFunction } from 'express-serve-static-core';
+// import { CustomExpress } from '@backend-pattern/@types';
 
 import { UserModel, User } from '@backend-pattern/models/user';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 
+import { CustomExpress } from '@backend-pattern/@types';
+
 interface UserController {
-  signUp: (
-    req: Express['request'] & {
-      body: User;
-    },
-    res: Express['response'],
-    next: NextFunction
-  ) => Promise<void>;
-  login: (
-    req: Express['request'] & {
-      body: User;
-    },
-    res: Express['response'],
-    next: NextFunction
-  ) => Promise<void>;
+  signUp: CustomExpress<User>['middleware'];
+  login: CustomExpress<User>['middleware'];
 }
 
 const controller: UserController = {
-  signUp: async (req: Express['request'], res: Express['response'], next) => {
+  signUp: async (req, res, next) => {
     try {
       const { email, password } = req.body;
       const hashedPw = await bcrypt.hash(password, 12);
@@ -41,21 +31,19 @@ const controller: UserController = {
       next(err);
     }
   },
-  login: async (req: Express['request'], res: Express['response'], next) => {
+  login: async (req, res, next) => {
     try {
       const { email, password } = req.body;
       const user = await UserModel.findOne({ email });
       if (!user) {
         const error = new Error('A user with this email could not be found.');
-        // error.statusCode = 401;
-        throw error;
+        throw { message: error.message, statusCode: 401 };
       }
       // loadedUser = user;
       const isEqual = await bcrypt.compare(password, user.password);
       if (!isEqual) {
         const error = new Error('Wrong password!');
-        // error.statusCode = 401;
-        throw error;
+        throw { message: error.message, statusCode: 401 };
       }
       const token = jwt.sign(
         {

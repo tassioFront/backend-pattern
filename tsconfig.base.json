@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@backend-pattern/@types": ["libs/@types/src/index.ts"],
       "@backend-pattern/middleware/is-auth": [
         "libs/middleware/is-auth/src/index.ts"
       ],

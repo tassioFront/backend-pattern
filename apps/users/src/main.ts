@@ -2,6 +2,7 @@ import * as express from 'express';
 import mongoose from 'mongoose';
 
 import { isAuthEnum } from '@backend-pattern/middleware/is-auth';
+import { CustomExpress } from '@backend-pattern/@types';
 
 import usersRouter from './users.router';
 
@@ -27,9 +28,9 @@ app.use(usersRouter);
 app.use(
   (
     error,
-    req: express.Express['request'],
-    res: express.Express['response'],
-    _: express.NextFunction
+    req: CustomExpress['request'],
+    res: CustomExpress['response'],
+    _: CustomExpress['next']
   ) => {
     process.env.NODE_ENV !== 'production' &&
       console.log('Looks something went wrong, brother', error);

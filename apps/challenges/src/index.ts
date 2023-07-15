@@ -2,6 +2,7 @@ import * as express from 'express';
 import mongoose from 'mongoose';
 
 import { isAuthEnum } from '@backend-pattern/middleware/is-auth';
+import { CustomExpress } from '@backend-pattern/@types';
 
 import challengeRouter from './challenges.router';
 
@@ -27,9 +28,9 @@ app.use(challengeRouter);
 app.use(
   (
     error,
-    req: express.Express['request'],
-    res: express.Express['response'],
-    _: express.NextFunction
+    req: CustomExpress['request'],
+    res: CustomExpress['response'],
+    _: CustomExpress['next']
   ) => {
     process.env.NODE_ENV !== 'production' &&
       console.log('Looks something went wrong, brother', error, error.message);
@@ -45,7 +46,7 @@ mongoose
   .connect(
     `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_DB_KEY}.mongodb.net/?retryWrites=true&w=majority`
   )
-  .then((result) => {
+  .then((_) => {
     app.listen(port, () => {
       process.env.NODE_ENV !== 'production' &&
         console.log(`Listening at http://localhost:${port}`);

@@ -1,20 +1,9 @@
-import { Express, NextFunction } from 'express-serve-static-core';
-
+import { CustomExpress } from '@backend-pattern/@types';
 import { ChallengesModel, Challenge } from '@backend-pattern/models/challenges';
 
 interface ChallengeController {
-  getAll: (
-    req: Express['request'],
-    res: Express['response'],
-    next: NextFunction
-  ) => Promise<void>;
-  create: (
-    req: Express['request'] & {
-      body: Challenge;
-    },
-    res: Express['response'],
-    next: NextFunction
-  ) => Promise<void>;
+  getAll: CustomExpress['middleware'];
+  create: CustomExpress<Challenge>['middleware'];
 }
 
 const controller: ChallengeController = {
@@ -32,7 +21,7 @@ const controller: ChallengeController = {
       next(err);
     }
   },
-  create: async (req: Express['request'], res: Express['response'], next) => {
+  create: async (req, res, next) => {
     try {
       const { title, desc, tags } = req.body;
       const challenge = new ChallengesModel({

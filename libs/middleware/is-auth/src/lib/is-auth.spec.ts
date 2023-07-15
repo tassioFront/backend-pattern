@@ -1,5 +1,5 @@
 import * as jwt from 'jsonwebtoken';
-import { Express } from 'express-serve-static-core';
+import { CustomExpress } from '@backend-pattern/@types';
 
 const verify = jest.spyOn(jwt, 'verify');
 
@@ -11,7 +11,9 @@ describe('Auth middleware', function () {
         return null;
       },
     };
-    expect(isAuth.bind(this, req, {}, () => {})).toThrow('Not authenticated.');
+    expect(isAuth.bind(this, req, {}, () => null)).toThrow(
+      'Not authenticated.'
+    );
   });
 
   it('should throw an error if the authorization header is only one string', function () {
@@ -20,7 +22,7 @@ describe('Auth middleware', function () {
         return 'xyz';
       },
     };
-    expect(isAuth.bind(this, req, {}, () => {})).toThrow(
+    expect(isAuth.bind(this, req, {}, () => null)).toThrow(
       'jwt must be provided'
     );
   });
@@ -31,7 +33,7 @@ describe('Auth middleware', function () {
         return 'Bearer xyz';
       },
     };
-    expect(isAuth.bind(this, req, {}, () => {})).not.toThrow('sads');
+    expect(isAuth.bind(this, req, {}, () => null)).not.toThrow('sads');
   });
 
   it('should yield a userId after decoding the token', function () {
@@ -41,8 +43,8 @@ describe('Auth middleware', function () {
       get: function (headerName) {
         return 'Bearer djfkalsdjfaslfjdlas';
       },
-    } as Express['request'];
-    isAuth(req, {} as Express['response'], () => {});
+    } as CustomExpress['request'];
+    isAuth(req, {} as CustomExpress['response'], () => null);
     expect(req).toHaveProperty('userId');
     expect(req).toHaveProperty('userId', 'abc');
     expect(verify).toBeCalled();
