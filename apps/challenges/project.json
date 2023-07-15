@@ -15,7 +15,6 @@
         "outputPath": "dist/apps/challenges",
         "main": "apps/challenges/src/index.ts",
         "tsConfig": "apps/challenges/tsconfig.app.json",
-        "assets": ["apps/challenges/src/assets"],
         "isolatedConfig": true,
         "webpackConfig": "apps/challenges/webpack.config.js"
       },
