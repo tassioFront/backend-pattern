@@ -24,7 +24,7 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
 
       - name: Authenticate with Google Cloud
-        run: gcloud auth activate-service-account --key-file=${{ secrets.GCP_SA_KEY }}
+        run: gcloud auth activate-service-account
 
       - name: Build and deploy to Cloud Run
         run: |
