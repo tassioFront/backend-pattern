@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-interface Challenge {
+export interface Challenge {
   title: string;
   desc: string[];
   tags: string[];

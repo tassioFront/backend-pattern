@@ -6,7 +6,8 @@ const app = express();
 
 import challengeRouter from './challenges.router';
 
-app.use(bodyParser.json()); // application/json
+app.use(express.json());
+
 app.use((_, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
@@ -31,7 +32,7 @@ app.use(
     const status = error.statusCode || 500;
     const message = error.message;
     const data = error.data;
-    res.status(status).json({ message: message, data: data });
+    res.status(status).json({ message, data });
   }
 );
 

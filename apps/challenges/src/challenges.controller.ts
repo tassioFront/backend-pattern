@@ -1,13 +1,29 @@
-import { Express } from 'express-serve-static-core';
+import { Express, NextFunction } from 'express-serve-static-core';
 
-import Challenge from './test.model';
+import { ChallengesModel, Challenge } from '@backend-pattern/models/challenges';
 
-export default {
-  getAll: async (req: Express['request'], res: Express['response'], next) => {
+interface ChallengeController {
+  getAll: (
+    req: Express['request'],
+    res: Express['response'],
+    next: NextFunction
+  ) => Promise<void>;
+  create: (
+    req: Express['request'] & {
+      body: Challenge;
+    },
+    res: Express['response'],
+    next: NextFunction
+  ) => Promise<void>;
+}
+
+const controller: ChallengeController = {
+  getAll: async (_, res, next) => {
     try {
-      const challenge = await Challenge.find();
+      const challenges = await ChallengesModel.find();
       res.status(200).json({
-        challenge: challenge || ['empty!'],
+        message: 'Ok',
+        challenges,
       });
     } catch (err) {
       if (!err.statusCode) {
@@ -17,14 +33,16 @@ export default {
     }
   },
   create: async (req: Express['request'], res: Express['response'], next) => {
-    const challenge = new Challenge({
-      title: 'My first title',
-      content: 'My first content',
-    });
     try {
+      const { title, desc, tags } = req.body;
+      const challenge = new ChallengesModel({
+        title,
+        desc,
+        tags,
+      });
       await challenge.save();
       res.status(201).json({
-        message: 'Created!',
+        message: 'Ok',
       });
     } catch (err) {
       if (!err.statusCode) {
@@ -34,3 +52,5 @@ export default {
     }
   },
 };
+
+export default controller;
