@@ -24,7 +24,7 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           project_id: ${{ vars.PROJECT_ID }}
 
-      - name: Authenticate with Google Coud
+      - name: Authenticate with Google Cloud
         run: |
           echo "${{ secrets.GCP_SA_KEY }}" > key.json
           gcloud auth activate-service-account --key-file=key.json
