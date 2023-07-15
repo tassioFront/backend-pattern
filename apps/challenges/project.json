@@ -1,50 +1,63 @@
 {
-  "root": "apps/challenges",
+  "name": "challenges",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/challenges/src",
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:build",
+      "executor": "@nx/webpack:webpack",
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
         "outputFileName": "index.js",
+        "target": "node",
+        "compiler": "tsc",
         "outputPath": "dist/apps/challenges",
         "main": "apps/challenges/src/index.ts",
-        "tsConfig": "apps/challenges/tsconfig.app.json"
+        "tsConfig": "apps/challenges/tsconfig.app.json",
+        "assets": ["apps/challenges/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/challenges/webpack.config.js"
       },
       "configurations": {
-        "production": {
-          "optimization": true,
-          "extractLicenses": true,
-          "inspect": false,
-          "fileReplacements": [
-            {
-              "replace": "apps/challenges/src/environments/environment.ts",
-              "with": "apps/challenges/src/environments/environment.prod.ts"
-            }
-          ]
-        }
+        "development": {},
+        "production": {}
       }
     },
     "serve": {
-      "executor": "@nrwl/node:execute",
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
       "options": {
         "buildTarget": "challenges:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "challenges:build:development"
+        },
+        "production": {
+          "buildTarget": "challenges:build:production"
+        }
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["apps/challenges/**/*.ts"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/challenges"],
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/challenges/jest.config.js",
+        "jestConfig": "apps/challenges/jest.config.ts",
         "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
       }
     }
   },
