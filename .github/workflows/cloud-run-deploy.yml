@@ -27,7 +27,7 @@ jobs:
 
       - name: Build and deploy to Cloud Run
         run: |
-          gcloud builds submit --tag gcr.io/${{ vars.PROJECT_ID }}/${{ vars.IMAGE_NAME }}
+          gcloud builds submit --tag gcr.io/${{ vars.PROJECT_ID }}/${{ vars.IMAGE_NAME }} --project ${{ vars.PROJECT_ID }}
           gcloud run deploy ${{ vars.SERVICE_NAME }} \
             --image gcr.io/${{ vars.PROJECT_ID }}/${{ vars.IMAGE_NAME }} \
             --platform managed \
