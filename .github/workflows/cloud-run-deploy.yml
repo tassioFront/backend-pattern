@@ -21,9 +21,10 @@ jobs:
         uses: google-github-actions/setup-gcloud@v1
         with:
           version: 'latest'
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
 
       - name: Authenticate with Google Cloud
-        run: gcloud auth configure-docker
+        run: gcloud auth activate-service-account --key-file=${{ secrets.GCP_SA_KEY }}
 
       - name: Build and deploy to Cloud Run
         run: |
