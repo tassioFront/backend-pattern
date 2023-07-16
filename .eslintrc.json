@@ -37,6 +37,12 @@
         "jest": true
       },
       "rules": {}
+    },
+    {
+      "files": ["*.spec.ts"],
+      "rules": {
+        "@typescript-eslint/ban-ts-comment": "off"
+      }
     }
   ]
 }

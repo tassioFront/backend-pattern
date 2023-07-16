@@ -34,10 +34,8 @@ app.use(
   ) => {
     process.env.NODE_ENV !== 'production' &&
       console.log('Looks something went wrong, brother', error, error.message);
-    const status = error.statusCode || 500;
-    const message = error.message;
-    const data = error.data;
-    res.status(status).json({ message, data });
+    error.statusCode = error.statusCode || 500;
+    res.status(error.statusCode).json(error);
   }
 );
 
