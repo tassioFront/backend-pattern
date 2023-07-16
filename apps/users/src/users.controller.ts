@@ -31,8 +31,9 @@ const controller: UserController = {
       expectedBehavior: async () => {
         const { email, password } = req.body;
         const user = await UserModel.findOne({ email });
-        const isEqual = await compare(password, user?.password);
-        if (!user || !isEqual) {
+
+        const isEqual = await compare(password, user?.password || '');
+        if (!user?.email || !isEqual) {
           return throwCustomError({
             msg: 'Email not found or wrong password',
             statusCode: 401,
