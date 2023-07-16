@@ -5,7 +5,8 @@
   "scripts": {
     "start": "nx serve",
     "build": "nx build",
-    "test": "nx test"
+    "test": "nx test",
+    "test:ci-many": "nx run-many --target=test --silent"
   },
   "private": true,
   "dependencies": {
