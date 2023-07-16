@@ -1,2 +1,2 @@
-export { default as ChallengesModel } from './lib/models-challenges';
-export { Challenge } from './lib/models-challenges';
+export { default as ChallengesModel } from './lib/model';
+export { Challenge } from './lib/model';

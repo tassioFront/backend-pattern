@@ -1,9 +1,7 @@
-// import { CustomExpress } from '@backend-pattern/@types';
-
-import { UserModel, User } from '@backend-pattern/models/user';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 
+import { UserModel, User } from '@backend-pattern/models/user';
 import { CustomExpress } from '@backend-pattern/@types';
 
 interface UserController {
