@@ -1,21 +1,21 @@
 {
-  "name": "middleware-is-auth",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/middleware/is-auth/src",
+  "name": "middleware",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/middleware/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/middleware/is-auth/**/*.ts"]
+        "lintFilePatterns": ["libs/middleware/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/middleware/is-auth/jest.config.ts",
+        "jestConfig": "libs/middleware/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {

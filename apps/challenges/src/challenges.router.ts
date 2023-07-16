@@ -1,6 +1,6 @@
 import * as express from 'express';
 
-import { isAuth } from '@backend-pattern/middleware/is-auth';
+import { isAuth } from '@backend-pattern/middleware';
 
 import controller from './challenges.controller';
 

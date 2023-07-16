@@ -16,8 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@backend-pattern/@types": ["libs/@types/src/index.ts"],
-      "@backend-pattern/middleware/is-auth": [
-        "libs/middleware/is-auth/src/index.ts"
+      "@backend-pattern/middleware": [
+        "libs/middleware/src/index.ts"
       ],
       "@backend-pattern/models/challenges": [
         "libs/models/challenges/src/index.ts"
