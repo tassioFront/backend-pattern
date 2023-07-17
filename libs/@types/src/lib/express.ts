@@ -19,6 +19,7 @@ interface CustomExpress<T = any> {
     Record<string, any>
   > & {
     userId: string;
+    isMasterAdmin: boolean;
   };
   response: Express['response'];
   next: NextFunction;

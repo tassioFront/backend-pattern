@@ -1,9 +1,15 @@
 import * as jwt from 'jsonwebtoken';
 import { CustomExpress } from '@backend-pattern/@types';
+import { throwCustomError } from '@backend-pattern/utils';
 
 enum isAuthEnum {
   authHeader = 'Authorization',
 }
+
+const notAuthenticatedErrorParam = {
+  msg: 'Not authenticated.',
+  statusCode: 401,
+};
 
 const isAuth = (
   req: CustomExpress['request'],
@@ -12,8 +18,7 @@ const isAuth = (
 ) => {
   const authHeader = req.get(isAuthEnum.authHeader);
   if (!authHeader) {
-    const error = new Error('Not authenticated.');
-    throw { message: error.message, statusCode: 401 };
+    return throwCustomError(notAuthenticatedErrorParam);
   }
   const token = authHeader.split(' ')[1];
   let decodedToken;
@@ -24,8 +29,7 @@ const isAuth = (
     throw err;
   }
   if (!decodedToken) {
-    const error = new Error('Not authenticated.');
-    throw { message: error.message, statusCode: 401 };
+    return throwCustomError(notAuthenticatedErrorParam);
   }
   req.userId = decodedToken.userId;
   next();

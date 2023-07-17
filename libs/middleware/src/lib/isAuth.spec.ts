@@ -3,7 +3,7 @@ import { CustomExpress } from '@backend-pattern/@types';
 
 const verify = jest.spyOn(jwt, 'verify');
 
-import { isAuth } from './is-auth';
+import { isAuth } from './isAuth';
 describe('Auth middleware', function () {
   it('should throw an error if no authorization header is present', function () {
     const req = {
@@ -37,7 +37,7 @@ describe('Auth middleware', function () {
   });
 
   it('should yield a userId after decoding the token', function () {
-    verify.mockReturnValue({ userId: 'abc' });
+    verify.mockReturnValue({ userId: 'abc', isMasterAdmin: false });
 
     const req = {
       get: function (headerName) {
@@ -45,8 +45,8 @@ describe('Auth middleware', function () {
       },
     } as CustomExpress['request'];
     isAuth(req, {} as CustomExpress['response'], () => null);
-    expect(req).toHaveProperty('userId');
     expect(req).toHaveProperty('userId', 'abc');
+    expect(req).toHaveProperty('isMasterAdmin', false);
     expect(verify).toBeCalled();
     verify.mockClear();
   });

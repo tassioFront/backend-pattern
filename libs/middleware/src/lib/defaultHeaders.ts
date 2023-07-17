@@ -1,5 +1,5 @@
 import { CustomExpress } from '@backend-pattern/@types';
-import { isAuthEnum } from './is-auth';
+import { isAuthEnum } from './isAuth';
 
 export const defaultHeaders = (
   _,

@@ -83,6 +83,7 @@ describe('Users -> Login controller', function () {
       email: 'test@test.com',
       password: 'hash_password',
       _id: 1234,
+      isMasterAdmin: false,
     });
     compare.mockResolvedValue(true);
     sign.mockResolvedValue('any token');
@@ -107,5 +108,6 @@ describe('Users -> Login controller', function () {
 
     expect(res.status).toBeCalledWith(200);
     expect(json).toBeCalledWith({ id: '1234', token: 'any token' });
+    expect(sign).toBeCalledWith({ userId: '1234', isMasterAdmin: false });
   });
 });

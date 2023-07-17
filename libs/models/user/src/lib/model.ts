@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 export interface User {
   email: string;
   password: string;
+  isMasterAdmin: boolean;
 }
 
 const userSchema = new Schema<User>(
@@ -15,6 +16,10 @@ const userSchema = new Schema<User>(
     password: {
       type: String,
       required: true,
+    },
+    isMasterAdmin: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

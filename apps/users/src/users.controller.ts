@@ -41,7 +41,7 @@ const controller: UserController = {
         }
 
         const userId = user._id.toString();
-        const token = await sign(userId);
+        const token = await sign({ userId, isMasterAdmin: user.isMasterAdmin });
         res.status(200).json({ token, id: userId });
       },
       next,
