@@ -23,5 +23,5 @@
       }
     }
   },
-  "tags": []
+  "tags": ["type:db-model", "scope:users"]
 }

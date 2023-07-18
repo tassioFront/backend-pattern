@@ -12,7 +12,6 @@ const isMasterAdmin = (
   next: CustomExpress['next']
 ) => {
   const isMasterAdmin = req.isMasterAdmin;
-  console.log('🚀 ~ file: isMasterAdmin.ts:15 ~ isMasterAdmin:', isMasterAdmin);
   if (!isMasterAdmin) {
     return throwCustomError(forbiddenErrorParam);
   }

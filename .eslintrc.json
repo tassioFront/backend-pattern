@@ -13,8 +13,24 @@
             "allow": [],
             "depConstraints": [
               {
-                "sourceTag": "*",
-                "onlyDependOnLibsWithTags": ["*"]
+                "sourceTag": "type:app",
+                "onlyDependOnLibsWithTags": ["type:db-model", "type:utils", "type:middleware"]
+              },
+              {
+                "sourceTag": "type:middleware",
+                "onlyDependOnLibsWithTags": ["type:utils"]
+              },
+              {
+                "sourceTag": "type:utils",
+                "onlyDependOnLibsWithTags": ["type:utils"]
+              },
+              {
+                "sourceTag": "scope:challenges",
+                "onlyDependOnLibsWithTags": ["scope:challenges", "scope:shared"]
+              },
+              {
+                "sourceTag": "scope:users",
+                "onlyDependOnLibsWithTags": ["scope:users", "scope:shared"]
               }
             ]
           }

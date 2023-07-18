@@ -60,5 +60,5 @@
       }
     }
   },
-  "tags": []
+  "tags": ["type:app", "scope:challenges"]
 }
