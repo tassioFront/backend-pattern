@@ -8,29 +8,43 @@ This project has been created to explore Node functionalities and backend patter
 
 This project uses [Nx](https://nx.dev) to manage the monorepo, including [its structure suggestion](https://nx.dev/more-concepts/applications-and-libraries). So: 
 
-- apps/* folder -> See each one as a service;
-- libs/model/* folder -> Database table structure and they access the databases;
-- other folders in libs/* -> helpers, types and middleware.
+- `apps/*` folder -> See each one as a Node service;
+- `libs/model/*` folder -> Database table structure and they access the databases;
+- other folders in `libs/*` -> helpers, types, and middleware.
+
+It's possible to see the current project structure by running the following script 
+```
+yarn graph
+```
+
+![Screen Shot 2023-07-18 at 09 18 08](https://github.com/tassioFront/backend-pattern/assets/47509510/eb6a8b5c-2960-4b4c-a108-d91cf54736e2)
+Screenshot of the project structure - it might be outdated
 
 # Available Scripts
 
-Running Challenges service
+Using the challenges service as an example, you can run the following scripts (it's possible to do the same at any other project in the repository - See more at [anatomy](#anatomy)). 
 
+Running Challenges service
 ```
 # requires a mongo connection
 nx serve challenges
-
+```
+Running Challenges tests
+```
 nx test challenges
+```
 
+Running Challenges build
+```
 nx build challenges
-
 ```
 
 ... other projects have the same structure. See more at [anatomy](#anatomy)
 
-## run many projects at the same time
 
-Running test in all projects
+## Run many projects at the same time
+
+Running tests in all projects
 
 ```
 yarn test:ci-many
