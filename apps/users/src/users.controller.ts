@@ -13,6 +13,15 @@ const controller: UserController = {
     return trycatchfy({
       expectedBehavior: async () => {
         const { email, password } = req.body;
+        const userExists = await UserModel.find({
+          email,
+        });
+        if (userExists.length > 0) {
+          return throwCustomError({
+            msg: 'User already exists!',
+            statusCode: 422,
+          });
+        }
         const hashedPw = await hash(password);
         const user = new UserModel({
           email,

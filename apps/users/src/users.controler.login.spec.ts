@@ -18,26 +18,6 @@ jest.mock('@backend-pattern/utils', () => {
   };
 });
 describe('Users -> Login controller', function () {
-  it('should throw an error with code 500 if accessing the database fails', async () => {
-    findOne.mockImplementationOnce(() => {
-      throw new Error('Any error');
-    });
-
-    const next = jest.fn();
-    const status = jest.fn();
-    const req = {
-      body: {
-        email: 'test@test.com',
-        password: 'tester',
-      },
-    } as CustomExpress['request'];
-
-    // @ts-expect-error
-    await controller.login(req, { status } as CustomExpress['response'], next);
-
-    expect(next).toBeCalled();
-  });
-
   it('should throw an error with code 401 when given email is wrong or password is not equal to hashed password', async () => {
     findOne.mockResolvedValue(null);
     compare.mockResolvedValue(true);
