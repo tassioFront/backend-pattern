@@ -6,12 +6,17 @@ interface trycatchfyError {
   next: NextFunction;
 }
 
+export const INTERNAL_SERVER_ERROR =
+  'Sorry, looks we are out :/ Try again later';
+
 export async function trycatchfy({ expectedBehavior, next }: trycatchfyError) {
   try {
     await expectedBehavior();
   } catch (error) {
     next(
-      !error.statusCode ? { message: error.message, statusCode: 500 } : error
+      !error.statusCode
+        ? { message: INTERNAL_SERVER_ERROR, statusCode: 500 }
+        : error
     );
   }
 }

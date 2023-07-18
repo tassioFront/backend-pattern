@@ -1,4 +1,4 @@
-import { trycatchfy } from './trycatchfy';
+import { INTERNAL_SERVER_ERROR, trycatchfy } from './trycatchfy';
 
 describe('Utils -> trycatchfy', () => {
   it('should call next with the error and status code default', async () => {
@@ -10,7 +10,7 @@ describe('Utils -> trycatchfy', () => {
     };
     await trycatchfy(params);
     expect(params.next).toBeCalledWith({
-      message: 'error on db',
+      message: INTERNAL_SERVER_ERROR,
       statusCode: 500,
     });
   });

@@ -4,6 +4,7 @@ import { CustomExpress } from '@backend-pattern/@types';
 const verify = jest.spyOn(jwt, 'verify');
 
 import { isAuth } from './isAuth';
+import { INTERNAL_SERVER_ERROR } from '@backend-pattern/utils';
 describe('Auth middleware', function () {
   it('should throw an error if no authorization header is present', function () {
     const req = {
@@ -23,7 +24,7 @@ describe('Auth middleware', function () {
       },
     };
     expect(isAuth.bind(this, req, {}, () => null)).toThrow(
-      'jwt must be provided'
+      INTERNAL_SERVER_ERROR
     );
   });
 

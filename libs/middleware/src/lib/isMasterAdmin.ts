@@ -11,7 +11,7 @@ const isMasterAdmin = (
   _: CustomExpress['response'],
   next: CustomExpress['next']
 ) => {
-  const isMasterAdmin = req.isMasterAdmin;
+  const isMasterAdmin = req?.isMasterAdmin;
   if (!isMasterAdmin) {
     return throwCustomError(forbiddenErrorParam);
   }

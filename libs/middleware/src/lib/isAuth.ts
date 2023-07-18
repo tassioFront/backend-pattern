@@ -1,6 +1,9 @@
 import * as jwt from 'jsonwebtoken';
 import { CustomExpress } from '@backend-pattern/@types';
-import { throwCustomError } from '@backend-pattern/utils';
+import {
+  INTERNAL_SERVER_ERROR,
+  throwCustomError,
+} from '@backend-pattern/utils';
 
 enum isAuthEnum {
   authHeader = 'Authorization',
@@ -25,8 +28,7 @@ const isAuth = (
   try {
     decodedToken = jwt.verify(token, process.env.JWT_SECRETE);
   } catch (err) {
-    err.statusCode = 500;
-    throw err;
+    return throwCustomError({ msg: INTERNAL_SERVER_ERROR, statusCode: 500 });
   }
   if (!decodedToken) {
     return throwCustomError(notAuthenticatedErrorParam);
