@@ -1,19 +1,29 @@
 import { CustomExpress } from '@backend-pattern/@types';
 import controller from './challenges.controller';
-import { Challenge, ChallengesModel } from '@backend-pattern/models/challenges';
 
-const find = jest.spyOn(ChallengesModel, 'find');
+jest.mock('@backend-pattern/utils', () => {
+  const originalModule = jest.requireActual('@backend-pattern/utils');
+  return {
+    ...originalModule,
+    paginator: jest.fn(),
+    throwCustomError: jest.fn(),
+  };
+});
+
+jest.mock('express-validator');
+
+import { paginator, throwCustomError } from '@backend-pattern/utils';
+import { validationResult } from 'express-validator';
 
 describe('Challenges -> Controller -> getAll', function () {
-  it('Should return all challenges with status 200', async () => {
-    find.mockResolvedValue([
-      {
-        _id: '64b2eff69bbde2163faaead9',
-        desc: ['um', 'dois'],
-        tags: ['b'],
-        title: 'title',
-      },
-    ]);
+  beforeEach(() => {
+    validationResult.mockReset();
+  });
+  it('Should throw an error as it has a invalid param', async () => {
+    validationResult.mockReturnValue({
+      isEmpty: () => false,
+      array: () => [{ msg: 'something went wrong' }],
+    });
     const next = jest.fn();
     const json = jest.fn();
     const res = {
@@ -22,14 +32,27 @@ describe('Challenges -> Controller -> getAll', function () {
       }),
     };
 
-    const req = {} as CustomExpress['request'];
+    const req = {
+      query: { page: 'WRONG!', limit: 10 },
+    } as CustomExpress['request'];
 
+    await controller.getAll(req, res, next);
+
+    expect(res.status).not.toBeCalled();
+    expect(throwCustomError).toBeCalled();
+    expect(json).not.toBeCalled();
     // @ts-expect-error
-    await controller.getAll(req, res as CustomExpress['response'], next);
+    throwCustomError.mockReset();
+  });
+  it('Should return all challenges with status 200', async () => {
+    validationResult.mockReturnValue({
+      isEmpty: () => true,
+    });
 
-    expect(res.status).toBeCalledWith(200);
-    expect(json).toBeCalledWith({
-      challenges: [
+    const MOCK_PAGINATOR_RESULT = {
+      totalPages: 10,
+      currentPage: 1,
+      items: [
         {
           _id: '64b2eff69bbde2163faaead9',
           desc: ['um', 'dois'],
@@ -37,6 +60,27 @@ describe('Challenges -> Controller -> getAll', function () {
           title: 'title',
         },
       ],
+    };
+    paginator.mockResolvedValue(MOCK_PAGINATOR_RESULT);
+    const next = jest.fn();
+    const json = jest.fn();
+    const res = {
+      status: jest.fn(() => {
+        return { json };
+      }),
+    };
+
+    const req = {
+      query: { page: '1', limit: '10' },
+    } as CustomExpress['request'];
+
+    // @ts-expect-error
+    await controller.getAll(req, res as CustomExpress['response'], next);
+
+    expect(res.status).toBeCalledWith(200);
+    expect(throwCustomError).not.toBeCalled();
+    expect(json).toBeCalledWith({
+      ...MOCK_PAGINATOR_RESULT,
       message: 'Ok',
     });
   });

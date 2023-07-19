@@ -3,13 +3,15 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "nx serve",
-    "build": "nx build",
-    "test": "nx test",
-    "test:ci-many": "nx run-many --target=test --silent",
+    "start": "npx nx serve",
+    "build": "npx nx build",
+    "test": "npx nx test",
+    "graph": "npx nx graph",
+    "build:ci-many": "npx nx run-many --target=build --silent",
+    "test:ci-many": "npx nx run-many --target=test --silent",
     "build:ci": "npx nx affected --target=build --base=origin/main --head=HEAD --parallel",
     "test:ci": "npx nx affected --target=test --base=origin/main --head=HEAD --parallel=5",
-    "test:nocoverage:ci": "nx affected --target=test:nocoverage --base=origin/main --head=HEAD --parallel --passWithNoTests"
+    "test:nocoverage:ci": "npx nx affected --target=test:nocoverage --base=origin/main --head=HEAD --parallel --passWithNoTests"
   },
   "private": true,
   "dependencies": {

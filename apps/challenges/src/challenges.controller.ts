@@ -1,6 +1,11 @@
 import { CustomExpress } from '@backend-pattern/@types';
 import { ChallengesModel, Challenge } from '@backend-pattern/models/challenges';
-import { trycatchfy } from '@backend-pattern/utils';
+import {
+  paginator,
+  throwCustomError,
+  trycatchfy,
+} from '@backend-pattern/utils';
+import { validationResult } from 'express-validator';
 
 interface ChallengeController {
   getAll: CustomExpress['middleware'];
@@ -8,14 +13,25 @@ interface ChallengeController {
 }
 
 const controller: ChallengeController = {
-  getAll: async (_, res, next) => {
+  getAll: async (req, res, next) => {
     return trycatchfy({
       expectedBehavior: async () => {
-        const challenges = await ChallengesModel.find();
-        res.status(200).json({
-          message: 'Ok',
-          challenges,
+        const { page, limit } = req.query;
+        const errors = validationResult(req);
+        if (!errors?.isEmpty?.()) {
+          const allErrors = errors.array();
+          return throwCustomError({
+            msg: allErrors[0].msg,
+            statusCode: 422,
+          });
+        }
+        const result = await paginator<Challenge>({
+          page: Number(page),
+          limit: Number(limit),
+          sortBy: { createdAt: -1 },
+          Model: ChallengesModel,
         });
+        res.status(200).json({ ...result, message: 'Ok' });
       },
       next,
     });
