@@ -7,12 +7,13 @@ jest.mock('@backend-pattern/utils', () => {
     ...originalModule,
     paginator: jest.fn(),
     throwCustomError: jest.fn(),
+    throwOnErrorField: jest.fn(),
   };
 });
 
 jest.mock('express-validator');
 
-import { paginator, throwCustomError } from '@backend-pattern/utils';
+import { paginator, throwOnErrorField } from '@backend-pattern/utils';
 import { validationResult } from 'express-validator';
 
 describe('Challenges -> Controller -> getAll', function () {
@@ -39,10 +40,10 @@ describe('Challenges -> Controller -> getAll', function () {
     await controller.getAll(req, res, next);
 
     expect(res.status).not.toBeCalled();
-    expect(throwCustomError).toBeCalled();
+    expect(throwOnErrorField).toBeCalled();
     expect(json).not.toBeCalled();
     // @ts-expect-error
-    throwCustomError.mockReset();
+    throwOnErrorField.mockReset();
   });
   it('Should return all challenges with status 200', async () => {
     validationResult.mockReturnValue({
@@ -78,7 +79,7 @@ describe('Challenges -> Controller -> getAll', function () {
     await controller.getAll(req, res as CustomExpress['response'], next);
 
     expect(res.status).toBeCalledWith(200);
-    expect(throwCustomError).not.toBeCalled();
+    expect(throwOnErrorField).not.toBeCalled();
     expect(json).toBeCalledWith({
       ...MOCK_PAGINATOR_RESULT,
       message: 'Ok',

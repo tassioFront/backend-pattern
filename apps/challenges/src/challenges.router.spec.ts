@@ -22,7 +22,8 @@ describe('Challenges -> Routes', function () {
     const getAllMiddleware = challengeRouter.stack[0].route.stack;
     const pageValidator = getAllMiddleware[0];
     const limitValidator = getAllMiddleware[1];
-    expect(pageValidator.name).toBe('page');
-    expect(limitValidator.name).toBe('limit');
+    expect(pageValidator.name).toBe('middleware'); // anonymous middleware
+    expect(limitValidator.name).toBe('middleware'); // anonymous middleware
+    expect(getAllMiddleware.length).toBe(3);
   });
 });

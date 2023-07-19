@@ -2,8 +2,8 @@ import { CustomExpress } from '@backend-pattern/@types';
 import { ChallengesModel, Challenge } from '@backend-pattern/models/challenges';
 import {
   paginator,
-  throwCustomError,
   trycatchfy,
+  throwOnErrorField,
 } from '@backend-pattern/utils';
 import { validationResult } from 'express-validator';
 
@@ -19,11 +19,7 @@ const controller: ChallengeController = {
         const { page, limit } = req.query;
         const errors = validationResult(req);
         if (!errors?.isEmpty?.()) {
-          const allErrors = errors.array();
-          return throwCustomError({
-            msg: allErrors[0].msg,
-            statusCode: 422,
-          });
+          return throwOnErrorField({ errors });
         }
         const result = await paginator<Challenge>({
           page: Number(page),

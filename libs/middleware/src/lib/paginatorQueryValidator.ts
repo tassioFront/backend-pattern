@@ -15,5 +15,5 @@ export const paginatorQueryValidator = () => {
   const limit = () => {
     return factory('limit');
   };
-  return [page, limit];
+  return [page(), limit()];
 };

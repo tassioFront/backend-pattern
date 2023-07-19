@@ -1,10 +1,10 @@
 import { paginatorQueryValidator } from './paginatorQueryValidator';
 
-describe('utils -> paginator', () => {
+describe('middleware -> paginatorQueryValidator', () => {
   it('Should return the middleware with required options from paginator', async () => {
     const result = paginatorQueryValidator();
-    const pageField = result[0]().builder.build();
-    const limitField = result[1]().builder.build();
+    const pageField = result[0].builder.build();
+    const limitField = result[1].builder.build();
 
     expect(pageField.fields[0]).toEqual('page');
     expect(pageField.stack[0]).toMatchObject({
