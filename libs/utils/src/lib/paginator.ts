@@ -1,8 +1,9 @@
-import { Model, SortOrder } from 'mongoose';
-interface Paginator {
+import { Model, SortOrder, FilterQuery } from 'mongoose';
+interface Paginator<T> {
   page: number;
   limit: number;
-  Model: Model<any>;
+  Model: Model<T>;
+  findParam?: FilterQuery<any>;
   sortBy:
     | string
     | { [key: string]: SortOrder | { $meta: 'textScore' } }
@@ -14,8 +15,9 @@ export const paginator = async <T>({
   limit = 10,
   Model,
   sortBy,
-}: Paginator) => {
-  const items: T[] = await Model.find()
+  findParam,
+}: Paginator<T>) => {
+  const items: T[] = await Model.find(findParam)
     .limit(limit * 1)
     .skip((page - 1) * limit)
     .sort(sortBy);
