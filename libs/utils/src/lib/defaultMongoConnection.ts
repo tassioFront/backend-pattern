@@ -23,7 +23,7 @@ export const defaultMongoConnection = (
     .catch((error) => {
       if (process.env.NODE_ENV !== 'production') {
         console.log(
-          `Looks something went wrong, brother: Service name: ${serviceName}`
+          `MongoDB: Looks something went wrong, brother: Service name: ${serviceName}`
         );
         console.error(error);
       }

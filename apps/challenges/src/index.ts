@@ -11,5 +11,5 @@ app.use(defaultHeaders);
 app.use(challengeRouter);
 app.use(onError);
 
-const port = Number(process.env.port) || 8080;
+const port = 8080;
 defaultMongoConnection(app, port, 'challenges');

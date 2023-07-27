@@ -1,10 +1,10 @@
-import mongoose from 'mongoose';
+import mongoose, { SchemaTypeOptions, Types } from 'mongoose';
 const Schema = mongoose.Schema;
 
 export interface Challenge {
   title: string;
   desc: string[];
-  tags: string[];
+  tags: Types.Array<Types.ObjectId>;
 }
 
 const challengeSchema = new Schema<Challenge>(
@@ -18,7 +18,8 @@ const challengeSchema = new Schema<Challenge>(
       required: true,
     },
     tags: {
-      type: [],
+      ref: 'Tag',
+      type: [Types.ObjectId],
       required: true,
     },
   },
