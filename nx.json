@@ -3,15 +3,13 @@
   "defaultProject": "challenges",
   "tasksRunnerOptions": {
     "default": {
-      "runner": "nx-cloud",
       "options": {
         "cacheableOperations": [
           "build",
           "lint",
           "test",
           "e2e"
-        ],
-        "accessToken": "NmM3MTRkMzktNWYyMS00MWI3LTk4YzUtNjg0YTcyM2I2MzA4fHJlYWQtd3JpdGU="
+        ]
       }
     }
   },
