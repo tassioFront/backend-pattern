@@ -1,5 +1,9 @@
 import { UserModel, User } from '@backend-pattern/models/user';
-import { throwCustomError, trycatchfy } from '@backend-pattern/utils';
+import {
+  default200Responses,
+  throwCustomError,
+  trycatchfy,
+} from '@backend-pattern/utils';
 import { CustomExpress } from '@backend-pattern/@types';
 import { compare, sign, hash } from './helpers';
 
@@ -28,10 +32,9 @@ const controller: UserController = {
           password: hashedPw,
         });
         await user.save();
-        res.status(201).json({
-          message: 'Ok',
-        });
+        default200Responses({ res, status: 201 });
       },
+      req,
       next,
     });
   },
@@ -40,7 +43,6 @@ const controller: UserController = {
       expectedBehavior: async () => {
         const { email, password } = req.body;
         const user = await UserModel.findOne({ email });
-
         const isEqual = await compare(password, user?.password || '');
         if (!user?.email || !isEqual) {
           return throwCustomError({
@@ -48,11 +50,11 @@ const controller: UserController = {
             statusCode: 401,
           });
         }
-
         const userId = user._id.toString();
         const token = await sign({ userId, isMasterAdmin: user.isMasterAdmin });
-        res.status(200).json({ token, id: userId });
+        default200Responses({ res, result: { token, id: userId } });
       },
+      req,
       next,
     });
   },

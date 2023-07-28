@@ -1,7 +1,29 @@
 import { INTERNAL_SERVER_ERROR, trycatchfy } from './trycatchfy';
+jest.mock('express-validator');
+jest.mock('./throwCustomError');
+import { validationResult } from 'express-validator';
+import { throwOnErrorField } from './throwCustomError';
 
 describe('Utils -> trycatchfy', () => {
+  it('should throw as there is an error at validator', async () => {
+    validationResult.mockReturnValueOnce({
+      isEmpty: () => false,
+      array: () => [{ msg: 'something went wrong' }],
+    });
+    const params = {
+      expectedBehavior: jest.fn().mockImplementation(() => {
+        throw new Error('error on db');
+      }),
+      next: jest.fn(),
+    };
+    await trycatchfy(params);
+    expect(throwOnErrorField).toBeCalled();
+  });
   it('should call next with the error and status code default', async () => {
+    validationResult.mockReturnValueOnce({
+      isEmpty: () => true,
+      array: () => [],
+    });
     const params = {
       expectedBehavior: jest.fn().mockImplementation(() => {
         throw new Error('error on db');
@@ -16,6 +38,10 @@ describe('Utils -> trycatchfy', () => {
   });
 
   it('should call expectedBehavior only', () => {
+    validationResult.mockReturnValueOnce({
+      isEmpty: () => true,
+      array: () => null,
+    });
     const params = {
       expectedBehavior: jest.fn().mockReturnValue(new Error('error on db')),
       next: jest.fn(),

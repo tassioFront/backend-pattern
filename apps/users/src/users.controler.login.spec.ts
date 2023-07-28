@@ -1,29 +1,41 @@
-import { UserModel } from '@backend-pattern/models/user';
 import { CustomExpress } from '@backend-pattern/@types';
 import controller from './users.controller';
-import * as helpers from './helpers';
 
-import { throwCustomError } from '@backend-pattern/utils';
-
-const findOne = jest.spyOn(UserModel, 'findOne');
-
-const compare = jest.spyOn(helpers, 'compare').mockResolvedValue(true);
-const sign = jest.spyOn(helpers, 'sign');
-
+jest.mock('./helpers');
+jest.mock('@backend-pattern/models/user');
+jest.mock('express-validator');
 jest.mock('@backend-pattern/utils', () => {
   const originalModule = jest.requireActual('@backend-pattern/utils');
   return {
     ...originalModule,
     throwCustomError: jest.fn(),
+    default200Responses: jest.fn(),
+    throwOnErrorField: jest.fn(),
   };
 });
-describe('Users -> Login controller', function () {
-  it('should throw an error with code 401 when given email is wrong or password is not equal to hashed password', async () => {
-    findOne.mockResolvedValue(null);
-    compare.mockResolvedValue(true);
+import { UserModel } from '@backend-pattern/models/user';
+import {
+  throwCustomError,
+  default200Responses,
+  throwOnErrorField,
+} from '@backend-pattern/utils';
+import { validationResult } from 'express-validator';
+import { compare, sign } from './helpers';
 
+describe('Users -> Login controller', function () {
+  beforeEach(() => {
+    throwCustomError.mockReset();
+    default200Responses.mockReset();
+    throwOnErrorField.mockReset();
+  });
+  it('should throw an error with code 401 when do not not find user', async () => {
+    UserModel.findOne.mockResolvedValue(null);
+    compare.mockResolvedValue(true);
+    validationResult.mockReturnValueOnce({
+      isEmpty: () => true,
+      array: () => [],
+    });
     const next = jest.fn();
-    const status = jest.fn();
 
     const req = {
       body: {
@@ -32,34 +44,46 @@ describe('Users -> Login controller', function () {
       },
     } as CustomExpress['request'];
 
-    // @ts-expect-error
-    await controller.login(req, { status } as CustomExpress['response'], next);
+    await controller.login(req, {}, next);
 
-    expect(status).not.toBeCalled();
+    expect(default200Responses).not.toBeCalled();
     expect(throwCustomError).toBeCalledWith({
       msg: 'Email not found or wrong password',
       statusCode: 401,
     });
+  });
 
-    findOne.mockResolvedValue({
-      email: 'test@tst.com',
+  it('should throw an error with code 401 when given password is not equal to hashed password', async () => {
+    UserModel.findOne.mockResolvedValue({
+      email: 'test@test.com',
       password: 'hash_password',
+      _id: 1234,
+      isMasterAdmin: false,
     });
     compare.mockResolvedValue(false);
+    validationResult.mockReturnValueOnce({
+      isEmpty: () => true,
+      array: () => [],
+    });
+    const next = jest.fn();
 
-    // @ts-expect-error
-    await controller.login(req, { status } as CustomExpress['response'], next);
-    expect(throwCustomError).toHaveBeenLastCalledWith({
+    const req = {
+      body: {
+        email: 'wrong@email.com',
+        password: 'tester',
+      },
+    } as CustomExpress['request'];
+
+    await controller.login(req, {}, next);
+
+    expect(default200Responses).not.toBeCalled();
+    expect(throwCustomError).toBeCalledWith({
       msg: 'Email not found or wrong password',
       statusCode: 401,
     });
-    expect(throwCustomError).toBeCalledTimes(2);
-
-    expect(status).not.toBeCalled();
   });
-
   it('should login user and return jwt token and user id', async () => {
-    findOne.mockResolvedValue({
+    UserModel.findOne.mockResolvedValue({
       email: 'test@test.com',
       password: 'hash_password',
       _id: 1234,
@@ -67,15 +91,12 @@ describe('Users -> Login controller', function () {
     });
     compare.mockResolvedValue(true);
     sign.mockResolvedValue('any token');
+    validationResult.mockReturnValueOnce({
+      isEmpty: () => true,
+      array: () => [],
+    });
 
     const next = jest.fn();
-    const json = jest.fn();
-    const res = {
-      status: jest.fn(() => {
-        return { json };
-      }),
-    };
-
     const req = {
       body: {
         email: 'wrong@email.com',
@@ -83,11 +104,11 @@ describe('Users -> Login controller', function () {
       },
     } as CustomExpress['request'];
 
-    // @ts-expect-error
-    await controller.login(req, res as CustomExpress['response'], next);
+    await controller.login(req, {}, next);
 
-    expect(res.status).toBeCalledWith(200);
-    expect(json).toBeCalledWith({ id: '1234', token: 'any token' });
+    expect(default200Responses).toBeCalled();
+    expect(throwCustomError).not.toBeCalled();
+    expect(throwOnErrorField).not.toBeCalled();
     expect(sign).toBeCalledWith({ userId: '1234', isMasterAdmin: false });
   });
 });

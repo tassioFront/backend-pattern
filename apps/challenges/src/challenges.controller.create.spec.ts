@@ -7,22 +7,16 @@ jest.mock('@backend-pattern/utils', () => {
     ...originalModule,
     default200Responses: jest.fn(),
     throwCustomError: jest.fn(),
-    throwOnErrorField: jest.fn(),
   };
 });
 jest.mock('express-validator');
 jest.mock('@backend-pattern/models/challenges');
 
-import { default200Responses, throwOnErrorField } from '@backend-pattern/utils';
-
 import { validationResult } from 'express-validator';
 
-describe('Challenges -> Controller -> create', function () {
-  beforeEach(() => {
-    validationResult.mockReset();
-    throwOnErrorField.mockReset();
-  });
+import { default200Responses } from '@backend-pattern/utils';
 
+describe('Challenges -> Controller -> create', function () {
   it('Should throw as there is an error at validator', async () => {
     validationResult.mockReturnValueOnce({
       isEmpty: () => false,
@@ -47,7 +41,6 @@ describe('Challenges -> Controller -> create', function () {
     // @ts-expect-error
     await controller.create(req, res as CustomExpress['response'], next);
 
-    expect(throwOnErrorField).toBeCalled();
     expect(default200Responses).not.toBeCalled();
   });
   it('Should save challenge at database', async () => {
@@ -75,6 +68,5 @@ describe('Challenges -> Controller -> create', function () {
     await controller.create(req, res as CustomExpress['response'], next);
 
     expect(default200Responses).toBeCalled();
-    expect(throwOnErrorField).not.toBeCalled();
   });
 });

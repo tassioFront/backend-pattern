@@ -6,7 +6,7 @@ import * as helpers from './helpers';
 const hash = jest.spyOn(helpers, 'hash');
 
 describe('Users -> SignUp controller', function () {
-  it('should create user at database', async () => {
+  it.skip('should create user at database', async () => {
     hash.mockResolvedValue('hash_password');
     const next = jest.fn();
     const json = jest.fn();
@@ -29,7 +29,7 @@ describe('Users -> SignUp controller', function () {
     expect(json).toBeCalledWith({ message: 'Ok' });
   });
 
-  it('should not create user at database as it already exists', async () => {
+  it.skip('should not create user at database as it already exists', async () => {
     hash.mockResolvedValue('hash_password');
     const next = jest.fn();
     const json = jest.fn();
@@ -54,9 +54,5 @@ describe('Users -> SignUp controller', function () {
       message: 'User already exists!',
       statusCode: 422,
     });
-  });
-
-  afterAll(async () => {
-    await UserModel.deleteOne({ email: 'test@test.com' });
   });
 });

@@ -5,9 +5,7 @@ import {
   trycatchfy,
   default200Responses,
   throwCustomError,
-  throwOnErrorField,
 } from '@backend-pattern/utils';
-import { validationResult } from 'express-validator';
 
 interface ChallengeController {
   getAll: CustomExpress['middleware'];
@@ -20,10 +18,6 @@ const controller: ChallengeController = {
   getAll: async (req, res, next) => {
     return trycatchfy({
       expectedBehavior: async () => {
-        const errors = validationResult(req);
-        if (!errors?.isEmpty?.()) {
-          return throwOnErrorField({ errors });
-        }
         const { page, limit } = req.query;
         const result = await paginator<Challenge>({
           page: Number(page),
@@ -33,16 +27,13 @@ const controller: ChallengeController = {
         });
         default200Responses({ res, result });
       },
+      req,
       next,
     });
   },
   create: async (req, res, next) => {
     return trycatchfy({
       expectedBehavior: async () => {
-        const errors = validationResult(req);
-        if (!errors?.isEmpty?.()) {
-          return throwOnErrorField({ errors });
-        }
         const { title, desc, tags } = req.body;
         const challenge = new ChallengesModel({
           title,
@@ -52,16 +43,13 @@ const controller: ChallengeController = {
         await challenge.save();
         default200Responses({ res, status: 201 });
       },
+      req,
       next,
     });
   },
   update: async (req, res, next) => {
     return trycatchfy({
       expectedBehavior: async () => {
-        const errors = validationResult(req);
-        if (!errors?.isEmpty?.()) {
-          return throwOnErrorField({ errors });
-        }
         const challenge = await ChallengesModel.findById(req.params.id);
         if (!challenge) {
           return throwCustomError({
@@ -76,21 +64,19 @@ const controller: ChallengeController = {
         await challenge.save();
         default200Responses({ res, status: 201 });
       },
+      req,
       next,
     });
   },
   createMany: async (req, res, next) => {
     return trycatchfy({
       expectedBehavior: async () => {
-        const errors = validationResult(req);
-        if (!errors?.isEmpty?.()) {
-          return throwOnErrorField({ errors });
-        }
         const { items } = req.body;
         const result = items.map((item) => new ChallengesModel(item));
         await ChallengesModel.bulkSave(result);
         default200Responses({ res, status: 201 });
       },
+      req,
       next,
     });
   },

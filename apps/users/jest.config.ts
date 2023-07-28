@@ -3,7 +3,6 @@ export default {
   displayName: { name: 'users', color: 'magenta' },
   preset: '../../jest.preset.js',
   testEnvironment: 'node',
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   transform: {
     '^.+\\.[tj]s$': [
       'ts-jest',

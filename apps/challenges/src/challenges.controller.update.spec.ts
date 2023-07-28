@@ -13,19 +13,13 @@ jest.mock('@backend-pattern/utils', () => {
 });
 jest.mock('express-validator');
 
-import {
-  default200Responses,
-  throwOnErrorField,
-  throwCustomError,
-} from '@backend-pattern/utils';
-
+import { default200Responses, throwCustomError } from '@backend-pattern/utils';
 import { validationResult } from 'express-validator';
+
 import { ChallengesModel } from '@backend-pattern/models/challenges';
 
 describe('Challenges -> Controller -> update', function () {
   beforeEach(() => {
-    validationResult.mockReset();
-    throwOnErrorField.mockReset();
     default200Responses.mockReset();
     throwCustomError.mockReset();
   });
@@ -53,7 +47,6 @@ describe('Challenges -> Controller -> update', function () {
     // @ts-expect-error
     await controller.update(req, res as CustomExpress['response'], next);
 
-    expect(throwOnErrorField).toBeCalled();
     expect(default200Responses).not.toBeCalled();
     expect(throwCustomError).not.toBeCalled();
   });
@@ -91,7 +84,6 @@ describe('Challenges -> Controller -> update', function () {
       msg: 'Challenge not found!',
       statusCode: 404,
     });
-    expect(throwOnErrorField).not.toBeCalled();
   });
 
   it('Should update ', async () => {
@@ -130,6 +122,5 @@ describe('Challenges -> Controller -> update', function () {
 
     expect(default200Responses).toBeCalled();
     expect(throwCustomError).not.toBeCalledWith();
-    expect(throwOnErrorField).not.toBeCalled();
   });
 });

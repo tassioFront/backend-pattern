@@ -17,6 +17,6 @@ export function throwCustomError({ msg, statusCode }: throwCustomError): void {
 export function throwOnErrorField({ errors }: throwOnErrorField): void {
   return throwCustomError({
     msg: errors.array()?.[0]?.msg,
-    statusCode: 422,
+    statusCode: 400,
   });
 }
