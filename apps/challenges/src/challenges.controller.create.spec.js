@@ -1,4 +1,3 @@
-import { CustomExpress } from '@backend-pattern/@types';
 import controller from './challenges.controller';
 
 jest.mock('@backend-pattern/utils', () => {
@@ -36,10 +35,9 @@ describe('Challenges -> Controller -> create', function () {
         tags: ['123'],
         desc: ['first description', '<p>second</p>'],
       },
-    } as CustomExpress['request'];
+    };
 
-    // @ts-expect-error
-    await controller.create(req, res as CustomExpress['response'], next);
+    await controller.create(req, res, next);
 
     expect(default200Responses).not.toBeCalled();
   });
@@ -62,10 +60,9 @@ describe('Challenges -> Controller -> create', function () {
         tags: ['123'],
         desc: ['first description', '<p>second</p>'],
       },
-    } as CustomExpress['request'];
+    };
 
-    // @ts-expect-error
-    await controller.create(req, res as CustomExpress['response'], next);
+    await controller.create(req, res, next);
 
     expect(default200Responses).toBeCalled();
   });

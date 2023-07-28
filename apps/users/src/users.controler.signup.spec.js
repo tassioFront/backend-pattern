@@ -1,5 +1,3 @@
-import { UserModel } from '@backend-pattern/models/user';
-import { CustomExpress } from '@backend-pattern/@types';
 import controller from './users.controller';
 import * as helpers from './helpers';
 
@@ -20,10 +18,9 @@ describe('Users -> SignUp controller', function () {
         email: 'test@test.com',
         password: 'tester',
       },
-    } as CustomExpress['request'];
+    };
 
-    // @ts-expect-error
-    await controller.signUp(req, res as CustomExpress['response'], next);
+    await controller.signUp(req, res, next);
 
     expect(res.status).toBeCalledWith(201);
     expect(json).toBeCalledWith({ message: 'Ok' });
@@ -43,10 +40,9 @@ describe('Users -> SignUp controller', function () {
         email: 'test@test.com',
         password: 'tester2',
       },
-    } as CustomExpress['request'];
+    };
 
-    // @ts-expect-error
-    await controller.signUp(req, res as CustomExpress['response'], next);
+    await controller.signUp(req, res, next);
 
     expect(res.status).not.toBeCalledWith(201);
     expect(json).not.toBeCalledWith({ message: 'Ok' });

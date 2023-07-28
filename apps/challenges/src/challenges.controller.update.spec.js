@@ -1,4 +1,3 @@
-import { CustomExpress } from '@backend-pattern/@types';
 import controller from './challenges.controller';
 
 jest.mock('@backend-pattern/models/challenges');
@@ -32,7 +31,6 @@ describe('Challenges -> Controller -> update', function () {
     const next = jest.fn();
     const res = {};
 
-    // @ts-expect-error
     const req = {
       params: {
         id: '123456',
@@ -42,10 +40,9 @@ describe('Challenges -> Controller -> update', function () {
         tags: ['123'],
         desc: ['first description', '<p>second</p>'],
       },
-    } as CustomExpress['request'];
+    };
 
-    // @ts-expect-error
-    await controller.update(req, res as CustomExpress['response'], next);
+    await controller.update(req, res, next);
 
     expect(default200Responses).not.toBeCalled();
     expect(throwCustomError).not.toBeCalled();
@@ -64,7 +61,6 @@ describe('Challenges -> Controller -> update', function () {
       }),
     };
 
-    // @ts-expect-error
     const req = {
       params: {
         id: '123456',
@@ -74,10 +70,9 @@ describe('Challenges -> Controller -> update', function () {
         tags: ['123'],
         desc: ['first description', '<p>second</p>'],
       },
-    } as CustomExpress['request'];
+    };
 
-    // @ts-expect-error
-    await controller.update(req, res as CustomExpress['response'], next);
+    await controller.update(req, res, next);
 
     expect(default200Responses).not.toBeCalled();
     expect(throwCustomError).toBeCalledWith({
@@ -105,7 +100,6 @@ describe('Challenges -> Controller -> update', function () {
       }),
     };
 
-    // @ts-expect-error
     const req = {
       params: {
         id: '123456',
@@ -115,10 +109,9 @@ describe('Challenges -> Controller -> update', function () {
         tags: ['456'],
         desc: ['other description', '<p>editing</p>'],
       },
-    } as CustomExpress['request'];
+    };
 
-    // @ts-expect-error
-    await controller.update(req, res as CustomExpress['response'], next);
+    await controller.update(req, res, next);
 
     expect(default200Responses).toBeCalled();
     expect(throwCustomError).not.toBeCalledWith();

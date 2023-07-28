@@ -1,4 +1,3 @@
-import { CustomExpress } from '@backend-pattern/@types';
 import controller from './challenges.controller';
 
 jest.mock('@backend-pattern/utils', () => {
@@ -13,7 +12,7 @@ jest.mock('@backend-pattern/utils', () => {
 
 jest.mock('express-validator');
 
-import { paginator, throwOnErrorField } from '@backend-pattern/utils';
+import { paginator } from '@backend-pattern/utils';
 import { validationResult } from 'express-validator';
 
 describe('Challenges -> Controller -> getAll', function () {
@@ -32,7 +31,7 @@ describe('Challenges -> Controller -> getAll', function () {
 
     const req = {
       query: { page: 'WRONG!', limit: 10 },
-    } as CustomExpress['request'];
+    };
 
     await controller.getAll(req, res, next);
 
@@ -66,10 +65,9 @@ describe('Challenges -> Controller -> getAll', function () {
 
     const req = {
       query: { page: '1', limit: '10' },
-    } as CustomExpress['request'];
+    };
 
-    // @ts-expect-error
-    await controller.getAll(req, res as CustomExpress['response'], next);
+    await controller.getAll(req, res, next);
 
     expect(res.status).toBeCalledWith(200);
     expect(json).toBeCalledWith({

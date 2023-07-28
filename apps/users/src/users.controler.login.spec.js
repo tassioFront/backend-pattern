@@ -1,4 +1,3 @@
-import { CustomExpress } from '@backend-pattern/@types';
 import controller from './users.controller';
 
 jest.mock('./helpers');
@@ -42,7 +41,7 @@ describe('Users -> Login controller', function () {
         email: 'wrong@email.com',
         password: 'tester',
       },
-    } as CustomExpress['request'];
+    };
 
     await controller.login(req, {}, next);
 
@@ -72,7 +71,7 @@ describe('Users -> Login controller', function () {
         email: 'wrong@email.com',
         password: 'tester',
       },
-    } as CustomExpress['request'];
+    };
 
     await controller.login(req, {}, next);
 
@@ -102,7 +101,7 @@ describe('Users -> Login controller', function () {
         email: 'wrong@email.com',
         password: 'tester',
       },
-    } as CustomExpress['request'];
+    };
 
     await controller.login(req, {}, next);
 
