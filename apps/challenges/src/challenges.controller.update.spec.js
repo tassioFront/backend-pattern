@@ -7,7 +7,7 @@ jest.mock('@backend-pattern/utils', () => {
     ...originalModule,
     default200Responses: jest.fn(),
     throwCustomError: jest.fn(),
-    throwOnErrorField: jest.fn(),
+    throwBadRequest: jest.fn(),
   };
 });
 jest.mock('express-validator');

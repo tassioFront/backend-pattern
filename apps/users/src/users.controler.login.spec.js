@@ -9,14 +9,14 @@ jest.mock('@backend-pattern/utils', () => {
     ...originalModule,
     throwCustomError: jest.fn(),
     default200Responses: jest.fn(),
-    throwOnErrorField: jest.fn(),
+    throwBadRequest: jest.fn(),
   };
 });
 import { UserModel } from '@backend-pattern/models/user';
 import {
   throwCustomError,
   default200Responses,
-  throwOnErrorField,
+  throwBadRequest,
 } from '@backend-pattern/utils';
 import { validationResult } from 'express-validator';
 import { compare, sign } from './helpers';
@@ -25,7 +25,7 @@ describe('Users -> Login controller', function () {
   beforeEach(() => {
     throwCustomError.mockReset();
     default200Responses.mockReset();
-    throwOnErrorField.mockReset();
+    throwBadRequest.mockReset();
   });
   it('should throw an error with code 401 when do not not find user', async () => {
     UserModel.findOne.mockResolvedValue(null);
@@ -107,7 +107,7 @@ describe('Users -> Login controller', function () {
 
     expect(default200Responses).toBeCalled();
     expect(throwCustomError).not.toBeCalled();
-    expect(throwOnErrorField).not.toBeCalled();
+    expect(throwBadRequest).not.toBeCalled();
     expect(sign).toBeCalledWith({ userId: '1234', isMasterAdmin: false });
   });
 });

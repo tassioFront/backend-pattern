@@ -62,7 +62,7 @@ const controller: ChallengeController = {
         challenge.desc = desc;
         challenge.tags = tags;
         await challenge.save();
-        default200Responses({ res, status: 201 });
+        default200Responses({ res, status: 200 });
       },
       req,
       next,

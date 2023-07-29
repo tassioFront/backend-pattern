@@ -1,6 +1,6 @@
 import { NextFunction } from 'express';
 import { validationResult } from 'express-validator';
-import { throwOnErrorField } from './throwCustomError';
+import { throwBadRequest } from './throwCustomError';
 import { CustomExpress } from '@backend-pattern/@types';
 
 interface trycatchfyError {
@@ -21,7 +21,7 @@ export async function trycatchfy({
   try {
     const errors = validationResult(req);
     if (!errors?.isEmpty?.()) {
-      return throwOnErrorField({ errors });
+      return throwBadRequest({ errors });
     }
     await expectedBehavior();
   } catch (error) {

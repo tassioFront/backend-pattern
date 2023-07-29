@@ -1,4 +1,4 @@
-import { throwCustomError, throwOnErrorField } from './throwCustomError';
+import { throwCustomError, throwBadRequest } from './throwCustomError';
 
 describe('Utils -> throwCustomError', () => {
   it('should throw error with given message and status code', () => {
@@ -8,6 +8,6 @@ describe('Utils -> throwCustomError', () => {
   });
   it('should throw error with given error validator object and status code to field error', () => {
     const errors = { array: () => [{ msg: 'my given error!' }] };
-    expect(() => throwOnErrorField({ errors })).toThrow('my given error!');
+    expect(() => throwBadRequest({ errors })).toThrow('my given error!');
   });
 });

@@ -6,7 +6,7 @@ jest.mock('@backend-pattern/utils', () => {
     ...originalModule,
     paginator: jest.fn(),
     throwCustomError: jest.fn(),
-    throwOnErrorField: jest.fn(),
+    throwBadRequest: jest.fn(),
   };
 });
 
