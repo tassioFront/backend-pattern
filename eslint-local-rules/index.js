@@ -1,4 +1,4 @@
-const avoidStatusError = require('./avoidStatusError');
+const avoidStatusError = require('./avoidStatusErrorOnController');
 module.exports = {
-  'avoid-status-error': avoidStatusError,
+  'avoid-status-error-on-controller': avoidStatusError,
 };

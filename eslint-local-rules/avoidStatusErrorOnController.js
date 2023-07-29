@@ -3,7 +3,7 @@ module.exports = {
     type: 'problem',
     docs: {
       description:
-        'Regarding design definitions, 400 http error should not be called at controllers. Only route files',
+        'Regarding design definitions, 400 and 500 https errors should not be called at controllers. 400 must be called at routes and 500 is defined as a default error at main/index file.',
       category: 'Best Practices',
       recommended: true,
     },
@@ -15,11 +15,11 @@ module.exports = {
     if (fileName.includes('controller')) {
       return {
         Literal: function (node) {
-          if (node.value === 400) {
+          if (node.value === 400 || node.value === 500) {
             context.report({
               node,
               message:
-                '400 http error is not allowed at controllers, it should be treated at routers.',
+                '400 and 500 https errors is not allowed at controllers. 400 must be called at routes (see the throwBadRequest helper) and 500 is defined as a default error at main/index file.',
             });
           }
         },
