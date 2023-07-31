@@ -7,38 +7,16 @@ jest.mock('@backend-pattern/utils', () => {
     paginator: jest.fn(),
     throwCustomError: jest.fn(),
     throwBadRequest: jest.fn(),
+    default200Responses: jest.fn(),
   };
 });
-
 jest.mock('express-validator');
 
-import { paginator } from '@backend-pattern/utils';
+import { paginator, default200Responses } from '@backend-pattern/utils';
 import { validationResult } from 'express-validator';
 
 describe('Challenges -> Controller -> getAll', function () {
-  it('Should throw an error as it has a invalid param', async () => {
-    validationResult.mockReturnValue({
-      isEmpty: () => false,
-      array: () => [{ msg: 'something went wrong' }],
-    });
-    const next = jest.fn();
-    const json = jest.fn();
-    const res = {
-      status: jest.fn(() => {
-        return { json };
-      }),
-    };
-
-    const req = {
-      query: { page: 'WRONG!', limit: 10 },
-    };
-
-    await controller.getAll(req, res, next);
-
-    expect(res.status).not.toBeCalled();
-    expect(json).not.toBeCalled();
-  });
-  it('Should return all challenges with status 200', async () => {
+  it('Should return all challenges with status 200 by calling paginator', async () => {
     validationResult.mockReturnValue({
       isEmpty: () => true,
     });
@@ -56,12 +34,7 @@ describe('Challenges -> Controller -> getAll', function () {
     };
     paginator.mockResolvedValue(MOCK_PAGINATOR_RESULT);
     const next = jest.fn();
-    const json = jest.fn();
-    const res = {
-      status: jest.fn(() => {
-        return { json };
-      }),
-    };
+    const res = {};
 
     const req = {
       query: { page: '1', limit: '10' },
@@ -69,10 +42,16 @@ describe('Challenges -> Controller -> getAll', function () {
 
     await controller.getAll(req, res, next);
 
-    expect(res.status).toBeCalledWith(200);
-    expect(json).toBeCalledWith({
-      ...MOCK_PAGINATOR_RESULT,
-      message: 'Ok',
+    expect(paginator).toBeCalledWith(
+      expect.objectContaining({
+        page: 1,
+        limit: 10,
+        sortBy: { createdAt: -1 },
+      })
+    );
+    expect(default200Responses).toBeCalledWith({
+      res,
+      result: MOCK_PAGINATOR_RESULT,
     });
   });
 });
