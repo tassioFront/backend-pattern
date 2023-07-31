@@ -19,6 +19,6 @@ describe('Utils -> throwCustomError', () => {
     };
     default200Responses({ res, result, status: 201 });
     expect(res.status).toBeCalledWith(201);
-    expect(json).toBeCalledWith({ ...result, message: 'Ok' });
+    expect(json).toBeCalledWith({ result, message: 'Ok' });
   });
 });

@@ -10,4 +10,4 @@ export const default200Responses = <T>({
   status = 200,
   result = undefined,
 }: IDefault200Responses<T>) =>
-  res.status(status).json({ ...result, message: 'Ok' });
+  res.status(status).json({ result, message: 'Ok' });
