@@ -16,7 +16,6 @@ describe('isMasterAdmin middleware', function () {
     const req = {
       isMasterAdmin: true,
     };
-    // @ts-expect-error
     await isMasterAdmin(req, {}, next);
     expect(next).toBeCalled();
   });
