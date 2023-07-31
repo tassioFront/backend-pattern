@@ -1,6 +1,6 @@
 import { NextFunction } from 'express';
 import { validationResult } from 'express-validator';
-import { throwBadRequest } from './throwCustomError';
+import { throwBadRequest } from '../throwCustomError/throwCustomError';
 import { CustomExpress } from '@backend-pattern/@types';
 
 interface trycatchfyError {

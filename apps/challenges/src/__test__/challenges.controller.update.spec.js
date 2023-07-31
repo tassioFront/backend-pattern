@@ -1,4 +1,4 @@
-import controller from './challenges.controller';
+import controller from '../challenges.controller';
 
 jest.mock('@backend-pattern/models/challenges');
 jest.mock('@backend-pattern/utils', () => {

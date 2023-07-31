@@ -1,8 +1,8 @@
 import { INTERNAL_SERVER_ERROR, trycatchfy } from './trycatchfy';
 jest.mock('express-validator');
-jest.mock('./throwCustomError');
+jest.mock('../throwCustomError/throwCustomError');
 import { validationResult } from 'express-validator';
-import { throwBadRequest } from './throwCustomError';
+import { throwBadRequest } from '../throwCustomError/throwCustomError';
 
 describe('Utils -> trycatchfy', () => {
   it('should throw as there is an error at validator', async () => {

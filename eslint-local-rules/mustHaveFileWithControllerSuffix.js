@@ -15,7 +15,7 @@ module.exports = {
   },
   create: function (context) {
     const currentDir = path.dirname(context.getFilename());
-    if (currentDir.includes('/apps/') && currentDir.includes('/src')) {
+    if (currentDir.includes('/apps/') && currentDir.endsWith('/src')) {
       const files = fs.readdirSync(currentDir);
       let hasControllerFile = false;
 

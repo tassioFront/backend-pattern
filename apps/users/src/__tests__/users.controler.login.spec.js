@@ -1,6 +1,6 @@
-import controller from './users.controller';
+import controller from '../users.controller';
 
-jest.mock('./helpers');
+jest.mock('../helpers');
 jest.mock('@backend-pattern/models/user');
 jest.mock('express-validator');
 jest.mock('@backend-pattern/utils', () => {
@@ -19,7 +19,7 @@ import {
   throwBadRequest,
 } from '@backend-pattern/utils';
 import { validationResult } from 'express-validator';
-import { compare, sign } from './helpers';
+import { compare, sign } from '../helpers';
 
 describe('Users -> Login controller', function () {
   beforeEach(() => {

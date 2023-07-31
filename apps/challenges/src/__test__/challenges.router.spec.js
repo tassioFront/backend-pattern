@@ -1,4 +1,4 @@
-import challengeRouter from './challenges.router';
+import challengeRouter from '../challenges.router';
 
 describe('Challenges -> Routes', function () {
   it('Should (/v1/create) there are isAuth and isMasterAdmin middleware and in the right order', () => {
