@@ -1,4 +1,4 @@
-import controller from '../users.controller';
+import controller from '../controller';
 import * as helpers from '../helpers';
 
 const hash = jest.spyOn(helpers, 'hash');

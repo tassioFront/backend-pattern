@@ -20,7 +20,7 @@ module.exports = {
       let hasControllerFile = false;
 
       for (const file of files) {
-        hasControllerFile = file.endsWith('.controller.ts');
+        hasControllerFile = file.endsWith('controller.ts');
 
         if (hasControllerFile) {
           break;

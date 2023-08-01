@@ -1,4 +1,4 @@
-import controller from '../users.controller';
+import controller from '../controller';
 
 jest.mock('../helpers');
 jest.mock('@backend-pattern/models/user');

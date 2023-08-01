@@ -6,7 +6,7 @@ import {
   paginatorQueryValidator,
 } from '@backend-pattern/middleware';
 
-import controller from './challenges.controller';
+import controller from './controller';
 import {
   body,
   param,

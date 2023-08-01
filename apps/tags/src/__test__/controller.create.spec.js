@@ -1,4 +1,4 @@
-import controller from '../tags.controller';
+import controller from '../controller';
 
 jest.mock('@backend-pattern/utils', () => {
   const originalModule = jest.requireActual('@backend-pattern/utils');

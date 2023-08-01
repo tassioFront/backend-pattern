@@ -2,7 +2,7 @@ import * as express from 'express';
 
 import { isAuth, isMasterAdmin } from '@backend-pattern/middleware';
 
-import controller from './tags.controller';
+import controller from './controller';
 import {
   body,
   param,
