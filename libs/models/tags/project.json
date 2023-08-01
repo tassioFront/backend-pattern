@@ -1,5 +1,5 @@
 {
-  "name": "tags",
+  "name": "models-tags",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/models/tags/src",
   "projectType": "library",
@@ -36,5 +36,5 @@
       }
     }
   },
-  "tags": ["type:db-model", ""]
+  "tags": ["type:db-model", "scope:tags"]
 }
