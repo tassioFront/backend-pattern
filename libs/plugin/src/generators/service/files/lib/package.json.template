@@ -1,0 +1,4 @@
+{
+  "name": "@backend-pattern/models/<%= name %>",
+  "version": "0.0.1"
+}

@@ -16,6 +16,7 @@ import {
   defineTargetConfig,
   NormalizedServiceSchema,
   normalizeServiceOptions,
+  normalizeModelOptions,
 } from '../shared';
 
 import { ServiceGeneratorSchema } from './schema';
@@ -35,7 +36,7 @@ function updateTsConfig(tree: Tree, options: NormalizedSchema) {
 
 export type NormalizedSchema = NormalizedServiceSchema<ServiceGeneratorSchema>;
 
-function addFiles(tree: Tree, options: NormalizedSchema) {
+function addFiles(tree: Tree, options: NormalizedSchema, dirContext: string) {
   const templateOptions = {
     ...options,
     ...names(options.name),
@@ -45,7 +46,7 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
 
   generateFiles(
     tree,
-    path.join(__dirname, 'files'),
+    path.join(__dirname, dirContext),
     options.projectRoot,
     templateOptions
   );
@@ -56,6 +57,8 @@ export async function serviceGenerator(
   schema: ServiceGeneratorSchema
 ) {
   const options = normalizeServiceOptions(tree, schema);
+  const modelOptions = normalizeModelOptions(tree, schema);
+  // define app config
   addProjectConfiguration(tree, options.projectName, {
     root: options.projectRoot,
     projectType: 'application',
@@ -65,8 +68,23 @@ export async function serviceGenerator(
     },
     tags: ['type:app', 'scope:' + options.name],
   });
+  // define lib config
+  addProjectConfiguration(tree, options.projectName, {
+    root: modelOptions.projectRoot,
+    projectType: 'library',
+    sourceRoot: `${modelOptions.projectRoot}/src`,
+    tags: ['type:db-model', 'scope:' + options.name],
+  });
+
+  // define app ts config
   updateTsConfig(tree, options);
-  addFiles(tree, options);
+  // define lib ts config
+  updateTsConfig(tree, modelOptions);
+
+  // define app files
+  addFiles(tree, options, 'files/app');
+  // define model config
+  addFiles(tree, modelOptions, 'files/lib');
   return runTasksInSerial();
 }
 

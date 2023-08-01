@@ -15,6 +15,6 @@ const config: Config = {
     ],
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '<%= offsetFromRoot %>coverage/apps/tags',
+  coverageDirectory: '<%= offsetFromRoot %>coverage/apps/<%= name %>',
 };
 export default config;

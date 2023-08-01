@@ -16,10 +16,30 @@ export function normalizeServiceOptions<T extends ServiceGeneratorSchema>(
   schema: T
 ): NormalizedServiceSchema<T> {
   const name = names(schema.name).fileName;
-  const projectDirectory = schema.directory
-    ? `${names(schema.directory).fileName}/${name}`
-    : name;
+  const projectDirectory = name;
   const dir = 'appsDir';
+  const projectName = name;
+  const projectRoot = `${getWorkspaceLayout(tree)[dir]}/${projectDirectory}`;
+
+  const offsetPathFromRoot = offsetFromRoot(projectRoot);
+  return {
+    ...schema,
+    name,
+    projectName,
+    projectRoot,
+    upperCaseName: name.charAt(0).toUpperCase() + name.slice(1),
+    projectDirectory,
+    offsetPathFromRoot,
+  };
+}
+
+export function normalizeModelOptions<T extends ServiceGeneratorSchema>(
+  tree: Tree,
+  schema: T
+): NormalizedServiceSchema<T> {
+  const name = names(schema.name).fileName;
+  const projectDirectory = `${names('models').fileName}/${name}`;
+  const dir = 'libsDir';
   const projectName = name;
   const projectRoot = `${getWorkspaceLayout(tree)[dir]}/${projectDirectory}`;
 

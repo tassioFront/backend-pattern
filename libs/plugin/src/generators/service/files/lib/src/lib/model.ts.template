@@ -1,0 +1,21 @@
+/*
+ * It's a example of use, you might wanna change it
+ */
+import mongoose from 'mongoose';
+const Schema = mongoose.Schema;
+
+export interface <%= upperCaseName %> {
+  title: string;
+}
+
+const schema = new Schema<<%= upperCaseName %>>(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
+
+export default mongoose.model('<%= upperCaseName %>', schema);

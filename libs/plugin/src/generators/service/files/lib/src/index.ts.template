@@ -1,0 +1,2 @@
+export { default as Model } from './lib/model';
+export { <%= upperCaseName %> } from './lib/model';
