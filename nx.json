@@ -1,4 +1,5 @@
 {
+  "npmScope": "backend-pattern",
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "defaultProject": "challenges",
   "tasksRunnerOptions": {
