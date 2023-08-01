@@ -1,0 +1,15 @@
+import * as express from 'express';
+
+import { defaultHeaders, onError } from '@backend-pattern/middleware';
+import { defaultMongoConnection } from '@backend-pattern/utils';
+
+import router from './router.ts';
+
+const app = express();
+app.use(express.json());
+app.use(defaultHeaders);
+app.use(router);
+app.use(onError);
+
+const port = 1999; // change it before any delivery
+defaultMongoConnection(app, port, '<%= name %>');

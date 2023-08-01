@@ -1,0 +1,37 @@
+/*
+ * It's a example of use, you might wanna change it
+ */
+import * as express from 'express';
+
+import { isAuth } from '@backend-pattern/middleware';
+
+import controller from './controller.ts';
+import {
+  body,
+  param,
+} from 'express-validator/src/middlewares/validation-chain-builders';
+
+const router = express.Router();
+const insertValidators = [
+  body('title')
+    .isString()
+    .trim()
+    .isLength({ min: 2, max: 10 })
+    .withMessage('title must be a string and 10 >= length >= 2'),
+];
+
+router.get('/v1/get-all', controller.getAll);
+router.post('/v1/create', isAuth, ...insertValidators, controller.create);
+router.put(
+  '/v1/update/:id',
+  isAuth,
+  param('id')
+    .isString()
+    .trim()
+    .isLength({ min: 24, max: 24 })
+    .withMessage('ID not allowed!'),
+  ...insertValidators,
+  controller.update
+);
+
+export default router;

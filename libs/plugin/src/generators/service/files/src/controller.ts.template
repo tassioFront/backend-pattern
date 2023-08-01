@@ -1,0 +1,64 @@
+/*
+ * It's a example of use, you might wanna change it
+ */
+import { CustomExpress } from '@backend-pattern/@types';
+import { Model, <%= upperCaseName %> } from '@backend-pattern/models/<%= name %>';
+import {
+  trycatchfy,
+  default200Responses,
+  throwCustomError,
+} from '@backend-pattern/utils';
+
+interface Controller {
+  getAll: CustomExpress['middleware'];
+  create: CustomExpress<<%= upperCaseName %>>['middleware'];
+  update: CustomExpress<<%= upperCaseName %>>['middleware'];
+}
+
+const controller: Controller = {
+  getAll: async (req, res, next) => {
+    return trycatchfy({
+      expectedBehavior: async () => {
+        const result = await Model.find();
+        default200Responses({ res, result });
+      },
+      req,
+      next,
+    });
+  },
+  create: async (req, res, next) => {
+    return trycatchfy({
+      expectedBehavior: async () => {
+        const { title } = req.body;
+        const challenge = new Model({
+          title,
+        });
+        await challenge.save();
+        default200Responses({ res, status: 201 });
+      },
+      req,
+      next,
+    });
+  },
+  update: async (req, res, next) => {
+    return trycatchfy({
+      expectedBehavior: async () => {
+        const item = await Model.findById(req.params.id);
+        if (!item) {
+          return throwCustomError({
+            msg: 'Item not found!',
+            statusCode: 404,
+          });
+        }
+        const { title } = req.body;
+        item.title = title;
+        await item.save();
+        default200Responses({ res, status: 200 });
+      },
+      req,
+      next,
+    });
+  },
+};
+
+export default controller;

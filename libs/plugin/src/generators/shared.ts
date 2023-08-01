@@ -1,19 +1,20 @@
 import { getWorkspaceLayout, names, Tree, offsetFromRoot } from '@nrwl/devkit';
 
-import { ServiceGeneratorSchema } from './library-vue/schema';
+import { ServiceGeneratorSchema } from './service/schema';
 
-export type NormalizedVueSchema<T> = {
+export type NormalizedServiceSchema<T> = {
   name: string;
+  upperCaseName: string;
   projectName: string;
   projectRoot: string;
   offsetPathFromRoot: string;
   projectDirectory: string;
 } & T;
 
-export function normalizeVueOptions<T extends ServiceGeneratorSchema>(
+export function normalizeServiceOptions<T extends ServiceGeneratorSchema>(
   tree: Tree,
   schema: T
-): NormalizedVueSchema<T> {
+): NormalizedServiceSchema<T> {
   const name = names(schema.name).fileName;
   const projectDirectory = schema.directory
     ? `${names(schema.directory).fileName}/${name}`
@@ -28,13 +29,14 @@ export function normalizeVueOptions<T extends ServiceGeneratorSchema>(
     name,
     projectName,
     projectRoot,
+    upperCaseName: name.charAt(0).toUpperCase() + name.slice(1),
     projectDirectory,
     offsetPathFromRoot,
   };
 }
 
 export function defineTargetConfig(
-  options: NormalizedVueSchema<ServiceGeneratorSchema>
+  options: NormalizedServiceSchema<ServiceGeneratorSchema>
 ) {
   return {
     build: {

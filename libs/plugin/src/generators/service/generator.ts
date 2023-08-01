@@ -14,8 +14,8 @@ import {
 
 import {
   defineTargetConfig,
-  NormalizedVueSchema,
-  normalizeVueOptions,
+  NormalizedServiceSchema,
+  normalizeServiceOptions,
 } from '../shared';
 
 import { ServiceGeneratorSchema } from './schema';
@@ -33,7 +33,7 @@ function updateTsConfig(tree: Tree, options: NormalizedSchema) {
   });
 }
 
-export type NormalizedSchema = NormalizedVueSchema<ServiceGeneratorSchema>;
+export type NormalizedSchema = NormalizedServiceSchema<ServiceGeneratorSchema>;
 
 function addFiles(tree: Tree, options: NormalizedSchema) {
   const templateOptions = {
@@ -55,7 +55,7 @@ export async function serviceGenerator(
   tree: Tree,
   schema: ServiceGeneratorSchema
 ) {
-  const options = normalizeVueOptions(tree, schema);
+  const options = normalizeServiceOptions(tree, schema);
   addProjectConfiguration(tree, options.projectName, {
     root: options.projectRoot,
     projectType: 'application',
