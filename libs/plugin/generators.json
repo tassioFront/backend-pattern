@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "plugin",
+  "version": "0.0.1",
+  "generators": {
+    "service": {
+      "factory": "./src/generators/service/generator#serviceGenerator",
+      "schema": "./src/generators/service/schema.json",
+      "description": "service generator",
+      "aliases": ["node-ser"]
+    }
+  },
+  "schematics": {
+    "service": {
+      "factory": "./src/generators/service/generator#ServiceGeneratorSchema",
+      "schema": "./src/generators/service/schema.json",
+      "description": "service schematic",
+      "aliases": ["node-ser"]
+    }
+  }
+}

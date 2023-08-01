@@ -20,10 +20,9 @@
       "@backend-pattern/models/challenges": [
         "libs/models/challenges/src/index.ts"
       ],
-      "@backend-pattern/models/tags": [
-        "libs/models/tags/src/index.ts"
-      ],
+      "@backend-pattern/models/tags": ["libs/models/tags/src/index.ts"],
       "@backend-pattern/models/user": ["libs/models/user/src/index.ts"],
+      "@backend-pattern/plugin": ["libs/plugin/src/index.ts"],
       "@backend-pattern/utils": ["libs/utils/src/index.ts"]
     }
   },

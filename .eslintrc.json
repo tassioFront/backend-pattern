@@ -2,7 +2,6 @@
   "root": true,
   "ignorePatterns": ["**/*"],
   "plugins": ["@nx", "eslint-plugin-local-rules"],
-
   "rules": {
     "local-rules/avoid-status-error-on-controller": "error",
     "local-rules/must-have-file-with-controller-suffix": "error"
@@ -19,7 +18,11 @@
             "depConstraints": [
               {
                 "sourceTag": "type:app",
-                "onlyDependOnLibsWithTags": ["type:db-model", "type:utils", "type:middleware"]
+                "onlyDependOnLibsWithTags": [
+                  "type:db-model",
+                  "type:utils",
+                  "type:middleware"
+                ]
               },
               {
                 "sourceTag": "type:middleware",
@@ -64,6 +67,11 @@
       "rules": {
         "@typescript-eslint/ban-ts-comment": "off"
       }
+    },
+    {
+      "files": "*.json",
+      "parser": "jsonc-eslint-parser",
+      "rules": {}
     }
   ]
 }
