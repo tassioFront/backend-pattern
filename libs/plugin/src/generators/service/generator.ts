@@ -16,20 +16,27 @@ import {
   defineTargetConfig,
   NormalizedServiceSchema,
   normalizeServiceOptions,
+  defineModelTargetConfig,
   normalizeModelOptions,
 } from '../shared';
 
 import { ServiceGeneratorSchema } from './schema';
 
-function updateTsConfig(tree: Tree, options: NormalizedSchema) {
+function updateTsConfig(
+  tree: Tree,
+  options: NormalizedSchema,
+  alternativeNameSpace?: string
+) {
   updateJson(tree, 'tsconfig.base.json', (json) => {
     const nxJson = readNxJson(tree);
     const c = json.compilerOptions;
     c.paths = c.paths || {};
     delete c.paths[options.name];
-    c.paths[`@${nxJson.npmScope}/${options.projectName}`] = [
-      `${options.projectRoot}/src/index.ts`,
-    ];
+    c.paths[
+      `@${nxJson.npmScope}/${
+        alternativeNameSpace ? alternativeNameSpace : options.projectName
+      }`
+    ] = [`${options.projectRoot}/src/index.ts`];
     return json;
   });
 }
@@ -72,6 +79,9 @@ export async function serviceGenerator(
   addProjectConfiguration(tree, options.projectName, {
     root: modelOptions.projectRoot,
     projectType: 'library',
+    targets: {
+      ...defineModelTargetConfig(modelOptions),
+    },
     sourceRoot: `${modelOptions.projectRoot}/src`,
     tags: ['type:db-model', 'scope:' + options.name],
   });
@@ -79,7 +89,7 @@ export async function serviceGenerator(
   // define app ts config
   updateTsConfig(tree, options);
   // define lib ts config
-  updateTsConfig(tree, modelOptions);
+  updateTsConfig(tree, modelOptions, 'models/' + modelOptions.projectName);
 
   // define app files
   addFiles(tree, options, 'files/app');

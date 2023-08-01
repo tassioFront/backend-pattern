@@ -55,6 +55,29 @@ export function normalizeModelOptions<T extends ServiceGeneratorSchema>(
   };
 }
 
+export function defineModelTargetConfig(
+  options: NormalizedServiceSchema<ServiceGeneratorSchema>
+) {
+  return {
+    build: {
+      executor: '@nx/js:tsc',
+      outputs: ['{options.outputPath}'],
+      options: {
+        outputPath: `dist/${options.projectRoot}`,
+        tsConfig: `${options.projectRoot}/tsconfig.lib.json`,
+        packageJson: `${options.projectRoot}/package.json`,
+        main: `${options.projectRoot}/src/index.ts`,
+      },
+    },
+    lint: {
+      executor: '@nx/linter:eslint',
+      outputs: ['{options.outputFile}'],
+      options: {
+        lintFilePatterns: [`${options.projectRoot}/**/*.ts`],
+      },
+    },
+  };
+}
 export function defineTargetConfig(
   options: NormalizedServiceSchema<ServiceGeneratorSchema>
 ) {

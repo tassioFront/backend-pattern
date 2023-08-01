@@ -3,7 +3,7 @@ import * as express from 'express';
 import { defaultHeaders, onError } from '@backend-pattern/middleware';
 import { defaultMongoConnection } from '@backend-pattern/utils';
 
-import router from './router.ts';
+import router from './router';
 
 const app = express();
 app.use(express.json());
