@@ -4,6 +4,23 @@
 
 This project has been created to explore Node functionalities and backend patterns. The main idea of this project is to be a template project. Then, use it in the future in new projects or to improve current ones I hope you enjoy it and learn something new. [See more here](https://frontend-pattern.vercel.app)
 
+# Project mentality (read it before moving on)
+
+This project follows a `programmatic pattern`, which means using the project tools to force contributors to follow the pattern instead of creating massive docs that nobody reads, in a nutshell.
+
+To do so, we must create programmatic constraints that will guarantee contributors have been following them, mainly by using: 
+
+- [Nx](https://nx.dev)
+- [Eslint](https://eslint.org/)
+
+Nx is used to create the project structure and help contributors to create things automatically as much as possible. That includes [creating new services](#Creating-a-new-service), for example.
+
+Eslint is our rules manager. Used to validate pattern definitions programmatically. That includes denying using a serviceA code into a serviceB context, denying controllers to throw 400 errors as it is a middleware responsibility, and so on. [See our custom rules here](https://github.com/tassioFront/backend-pattern/tree/main/eslint-local-rules)
+
+We might create an article about it soon, for now, consults the project source code and play it!
+
+OBS: It does not remove the documentation needs (even because this readme is a doc haha), but it reduces the amount and helps contributors to follow the team definitions.
+
 # Project structure
 
 This project uses [Nx](https://nx.dev) to manage the monorepo, including [its structure suggestion](https://nx.dev/more-concepts/applications-and-libraries). So: 
