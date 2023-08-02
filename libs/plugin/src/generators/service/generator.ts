@@ -75,7 +75,7 @@ export async function serviceGenerator(
     },
     tags: ['type:app', 'scope:' + options.name],
   });
-  // define lib config
+  // define model config
   addProjectConfiguration(tree, options.projectName, {
     root: modelOptions.projectRoot,
     projectType: 'library',
@@ -88,7 +88,7 @@ export async function serviceGenerator(
 
   // define app ts config
   updateTsConfig(tree, options);
-  // define lib ts config
+  // define model ts config
   updateTsConfig(tree, modelOptions, 'models/' + modelOptions.projectName);
 
   // define app files
