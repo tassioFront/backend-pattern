@@ -15,7 +15,19 @@ To do so, we must create programmatic constraints that will guarantee contributo
 
 Nx is used to create the project structure and help contributors to create things automatically as much as possible. That includes [creating new services](#creating-a-new-service), for example.
 
-Eslint is our rules manager. Used to validate pattern definitions programmatically. That includes denying using a serviceA code into a serviceB context, denying controllers to throw 400 errors as it is a middleware responsibility, and so on. [See our custom rules here](https://github.com/tassioFront/backend-pattern/tree/main/eslint-local-rules)
+Eslint is our rules manager. Used to validate pattern definitions programmatically. That includes denying using a serviceA code into a serviceB context, denying controllers to throw 400 errors as it is a middleware responsibility, and so on. [See our custom rules here](https://github.com/tassioFront/backend-pattern/tree/main/eslint-local-rules). See the screenshots to understand:
+
+Importing ChallengeModel at the User controller:
+
+![Screenshot 2023-08-02 at 18 54 49](https://github.com/tassioFront/backend-pattern/assets/47509510/52ca29f6-9093-440a-98c5-f42ae0c44efd)
+
+
+Throwing a 400 error at a controller:
+
+![Screenshot 2023-08-02 at 18 55 03](https://github.com/tassioFront/backend-pattern/assets/47509510/58eca5b8-6ed0-4144-8d30-d901279a91e9)
+
+
+
 
 We might create an article about it soon, for now, consults the project source code and play it!
 
