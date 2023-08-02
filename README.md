@@ -13,7 +13,7 @@ To do so, we must create programmatic constraints that will guarantee contributo
 - [Nx](https://nx.dev)
 - [Eslint](https://eslint.org/)
 
-Nx is used to create the project structure and help contributors to create things automatically as much as possible. That includes [creating new services](#Creating-a-new-service), for example.
+Nx is used to create the project structure and help contributors to create things automatically as much as possible. That includes [creating new services](#creating-a-new-service), for example.
 
 Eslint is our rules manager. Used to validate pattern definitions programmatically. That includes denying using a serviceA code into a serviceB context, denying controllers to throw 400 errors as it is a middleware responsibility, and so on. [See our custom rules here](https://github.com/tassioFront/backend-pattern/tree/main/eslint-local-rules)
 
