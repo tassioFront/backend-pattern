@@ -74,6 +74,35 @@ nx run-many -t <target1> <target2>
 nx run-many -t <target1> <target2> -p <proj1> <proj2>
 ```
 
+# Creating a new service
+
+You must follow the project pattern to create new stuff, including service. Ideally, the project itself must help you to follow them.
+
+Let's create a new service `checkout`. You have 2 options: prompt and VS extension. Both will generate service for you, including database configuration, minimal CRUD routing and controller methods, and the database data structure (model):
+
+## By prompt
+
+Using prompt to help you
+```
+yarn nx generate @backend-pattern/plugin:service
+```
+
+Using the full command
+```
+yarn nx generate @backend-pattern/plugin:service --name=checkout --no-interactive
+```
+
+## By VS code extension
+
+You can either use [Nx Console extension](https://marketplace.visualstudio.com/items?itemName=nrwl.angular-console) to make it for you: 
+
+![515ff6de282391a5dd2ac0349c6dc261](https://github.com/tassioFront/backend-pattern/assets/47509510/0f8cbc3c-93cc-422b-b812-7bba54bed541)
+
+Generated files example:
+![Screenshot 2023-08-02 at 09 44 42](https://github.com/tassioFront/backend-pattern/assets/47509510/f7b6efd5-1e3b-4227-a8c4-9666a96e90dd)
+
+Wanna know how it works? See the [local plugin]([https://github.com/tassioFront/backend-pattern/blob/33eed8f3d86a8061ba5b57beef42592678bf92ed/libs/plugin](https://github.com/tassioFront/backend-pattern/tree/main/libs/plugin) using [Nx generators](https://nx.dev/packages/plugin/generators/generator)
+
 # About author
 
 Hi, I'm Tássio Jordão (TJ), a Chemical with Front-End experience. Actually, I'm a Frontend developer with some Chemistry knowledge. [See more here](https://frontend-pattern.vercel.app/about)
