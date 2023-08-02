@@ -101,7 +101,7 @@ You can either use [Nx Console extension](https://marketplace.visualstudio.com/i
 Generated files example:
 ![Screenshot 2023-08-02 at 09 44 42](https://github.com/tassioFront/backend-pattern/assets/47509510/f7b6efd5-1e3b-4227-a8c4-9666a96e90dd)
 
-Wanna know how it works? See the [local plugin]([https://github.com/tassioFront/backend-pattern/blob/33eed8f3d86a8061ba5b57beef42592678bf92ed/libs/plugin](https://github.com/tassioFront/backend-pattern/tree/main/libs/plugin) using [Nx generators](https://nx.dev/packages/plugin/generators/generator)
+Wanna know how it works? See the [local plugin](https://github.com/tassioFront/backend-pattern/tree/main/libs/plugin) using [Nx generators](https://nx.dev/packages/plugin/generators/generator)
 
 # About author
 
